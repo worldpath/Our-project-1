@@ -3,19 +3,125 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
+
 permissions:
   id-token: write
   contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Azure login (OIDC)
         uses: azure/login@v2
         with:
           client-id: ${{ vars.AZURE_CLIENT_ID }}
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-      - name: Sanity check
-        run: az group list -o table
+
+      - name: Show inputs (non-secret)
+        run: |
+          echo "RESOURCE_GROUP=${{ vars.RESOURCE_GROUP }}"
+          echo "LOCATION=${{ vars.LOCATION }}"
+          echo "ACA_ENV_NAME=${{ vars.ACA_ENV_NAME }}"
+          echo "APP_NAME=${{ vars.APP_NAME }}"
+          echo "ACR_NAME=${{ vars.ACR_NAME }}"
+          echo "IMAGE_NAME=${{ vars.IMAGE_NAME }}"
+          echo "IMAGE_TAG=${{ vars.IMAGE_TAG }}"
+          echo "TARGET_PORT=${{ vars.TARGET_PORT }}"
+
+      - name: Ensure Azure providers + CLI extension
+        run: |
+          az extension add --name containerapp --upgrade
+          az provider register --namespace Microsoft.App --wait
+          az provider register --namespace Microsoft.OperationalInsights --wait
+
+      - name: Ensure resource group exists
+        run: |
+          az group create \
+            --name "${{ vars.RESOURCE_GROUP }}" \
+            --location "${{ vars.LOCATION }}"
+
+      - name: Ensure Container Apps environment exists
+        id: env
+        run: |
+          set -e
+          if ! az containerapp env show \
+            --name "${{ vars.ACA_ENV_NAME }}" \
+            --resource-group "${{ vars.RESOURCE_GROUP }}" >/dev/null 2>&1; then
+            echo "Creating Container Apps environment..."
+            az containerapp env create \
+              --name "${{ vars.ACA_ENV_NAME }}" \
+              --resource-group "${{ vars.RESOURCE_GROUP }}" \
+              --location "${{ vars.LOCATION }}"
+          else
+            echo "Environment exists."
+          fi
+
+      # If you ever need to BUILD and PUSH, add a step here.
+      # Since you already have an image in ACR, we skip build.
+
+      - name: Create/Update Container App (system-assigned identity)
+        id: upsert
+        run: |
+          set -e
+          REGISTRY="${{ vars.ACR_NAME }}.azurecr.io"
+          IMAGE="${REGISTRY}/${{ vars.IMAGE_NAME }}:${{ vars.IMAGE_TAG }}"
+
+          # Create or update the app with system-assigned identity
+          if az containerapp show \
+              --name "${{ vars.APP_NAME }}" \
+              --resource-group "${{ vars.RESOURCE_GROUP }}" >/dev/null 2>&1; then
+            echo "Updating existing app..."
+            az containerapp update \
+              --name "${{ vars.APP_NAME }}" \
+              --resource-group "${{ vars.RESOURCE_GROUP }}" \
+              --image "$IMAGE" \
+              --set-env-vars "WEBSITES_PORT=${{ vars.TARGET_PORT }}" \
+              --ingress external \
+              --target-port "${{ vars.TARGET_PORT }}" \
+              --min-replicas 1 \
+              --max-replicas 3
+          else
+            echo "Creating app..."
+            az containerapp create \
+              --name "${{ vars.APP_NAME }}" \
+              --resource-group "${{ vars.RESOURCE_GROUP }}" \
+              --environment "${{ vars.ACA_ENV_NAME }}" \
+              --image "$IMAGE" \
+              --ingress external \
+              --target-port "${{ vars.TARGET_PORT }}" \
+              --min-replicas 1 \
+              --max-replicas 3 \
+              --system-assigned \
+              --set-env-vars "WEBSITES_PORT=${{ vars.TARGET_PORT }}"
+          fi
+
+      - name: Grant ACR pull to the app's managed identity (idempotent)
+        run: |
+          set -e
+          # Principal ID of the Container App's managed identity
+          PRINCIPAL_ID=$(az resource show \
+            -g "${{ vars.RESOURCE_GROUP }}" \
+            -n "${{ vars.APP_NAME }}" \
+            --resource-type Microsoft.App/containerApps \
+            --query identity.principalId -o tsv)
+
+          # Scope is the ACR resource ID
+          ACR_ID=$(az acr show -n "${{ vars.ACR_NAME }}" --query id -o tsv)
+
+          # Assign AcrPull (ignore if it already exists)
+          az role assignment create \
+            --assignee "$PRINCIPAL_ID" \
+            --role "AcrPull" \
+            --scope "$ACR_ID" \
+            || echo "Role already assigned."
+
+      - name: Show app URL
+        run: |
+          az containerapp show \
+            --name "${{ vars.APP_NAME }}" \
+            --resource-group "${{ vars.RESOURCE_GROUP }}" \
+            --query properties.configuration.ingress.fqdn -o tsv
