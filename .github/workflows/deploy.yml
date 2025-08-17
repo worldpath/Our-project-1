@@ -32,8 +32,9 @@ jobs:
           echo "IMAGE_TAG=${{ vars.IMAGE_TAG }}"
           echo "TARGET_PORT=${{ vars.TARGET_PORT }}"
 
-      - name: Ensure Azure providers + CLI extension
-        run: |
+     - name: Ensure Azure CLI extension
+       run: az extension add --name containerapp --upgrade
+
           az extension add --name containerapp --upgrade
           az provider register --namespace Microsoft.App --wait
           az provider register --namespace Microsoft.OperationalInsights --wait
