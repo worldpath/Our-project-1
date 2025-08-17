@@ -35,71 +35,25 @@ jobs:
       - name: Ensure Azure CLI extension
         run: az extension add --name containerapp --upgrade
 
-      - name: Ensure Container Apps environment exists
-        run: |
-          set -e
-          if ! az containerapp env show \
-            --name "${{ vars.ACA_ENV_NAME }}" \
-            --resource-group "${{ vars.RESOURCE_GROUP }}" >/dev/null 2>&1; then
-            echo "Creating Container Apps environment..."
-            az containerapp env create \
-              --name "${{ vars.ACA_ENV_NAME }}" \
-              --resource-group "${{ vars.RESOURCE_GROUP }}" \
-              --location "${{ vars.LOCATION }}"
-          else
-            echo "Environment exists."
-          fi
-
-      - name: Create/Update Container App (system-assigned identity)
+      - name: Deploy Container App
         run: |
           set -e
           REGISTRY="${{ vars.ACR_NAME }}.azurecr.io"
-          IMAGE="${REGISTRY}/${{ vars.IMAGE_NAME }}:${{ vars.IMAGE_TAG }}"
+          IMAGE="$REGISTRY/${{ vars.IMAGE_NAME }}:${{ vars.IMAGE_TAG }}"
 
-          if az containerapp show \
-              --name "${{ vars.APP_NAME }}" \
-              --resource-group "${{ vars.RESOURCE_GROUP }}" >/dev/null 2>&1; then
-            echo "Updating existing app..."
-            az containerapp update \
-              --name "${{ vars.APP_NAME }}" \
-              --resource-group "${{ vars.RESOURCE_GROUP }}" \
-              --image "$IMAGE" \
-              --ingress external \
-              --target-port "${{ vars.TARGET_PORT }}" \
-              --min-replicas 1 \
-              --max-replicas 3 \
-              --set-env-vars "WEBSITES_PORT=${{ vars.TARGET_PORT }}"
-          else
-            echo "Creating app..."
-            az containerapp create \
-              --name "${{ vars.APP_NAME }}" \
-              --resource-group "${{ vars.RESOURCE_GROUP }}" \
-              --environment "${{ vars.ACA_ENV_NAME }}" \
-              --image "$IMAGE" \
-              --ingress external \
-              --target-port "${{ vars.TARGET_PORT }}" \
-              --min-replicas 1 \
-              --max-replicas 3 \
-              --system-assigned \
-              --set-env-vars "WEBSITES_PORT=${{ vars.TARGET_PORT }}"
-          fi
+          echo "Deploying $IMAGE to Container App ${{ vars.APP_NAME }} in RG ${{ vars.RESOURCE_GROUP }}"
 
-      - name: Grant ACR pull to the app's managed identity (idempotent)
-        run: |
-          set -e
-          PRINCIPAL_ID=$(az resource show \
-            -g "${{ vars.RESOURCE_GROUP }}" \
-            -n "${{ vars.APP_NAME }}" \
-            --resource-type Microsoft.App/containerApps \
-            --query identity.principalId -o tsv)
-
-          ACR_ID=$(az acr show -n "${{ vars.ACR_NAME }}" --query id -o tsv)
-
-          az role assignment create \
-            --assignee "$PRINCIPAL_ID" \
-            --role "AcrPull" \
-            --scope "$ACR_ID" \
-            || echo "Role already assigned."
+          az containerapp up \
+            --name "${{ vars.APP_NAME }}" \
+            --resource-group "${{ vars.RESOURCE_GROUP }}" \
+            --environment "${{ vars.ACA_ENV_NAME }}" \
+            --location "${{ vars.LOCATION }}" \
+            --image "$IMAGE" \
+            --ingress external \
+            --target-port "${{ vars.TARGET_PORT }}" \
+            --min-replicas 1 \
+            --max-replicas 3 \
+            --set-env-vars "WEBSITES_PORT=${{ vars.TARGET_PORT }}"
 
       - name: Show app URL
         run: |
