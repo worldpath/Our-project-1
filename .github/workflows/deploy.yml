@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: worldpath/crypto-trading-bot
 
 jobs:
   build-and-deploy:
