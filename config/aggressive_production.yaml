@@ -1,0 +1,48 @@
+# AGGRESSIVE Production Configuration for Crypto Trading Bot
+# ========================================================
+# ⚠️  AGGRESSIVE SETTINGS - HIGH RISK, HIGH REWARD
+# ========================================================
+
+environment: production
+trading_mode: aggressive
+
+# AGGRESSIVE TRADING SETTINGS
+aggressive_settings:
+  portfolio_risk: 30.0          # 30% portfolio risk
+  max_position_size: 15.0       # 15% max position size
+  concurrent_positions: 8       # 8 positions at once
+  trading_timeframe: "15m"      # 15-minute cycles
+  risk_per_trade: 5.0          # 5% risk per trade
+  
+# Trading pairs for maximum opportunities
+trading_pairs:
+  - BTC/USDT
+  - ETH/USDT
+  - ADA/USDT
+  - SOL/USDT
+  - MATIC/USDT
+  - XRP/USDT
+  - DOGE/USDT
+  - AVAX/USDT
+  - DOT/USDT
+  - LINK/USDT
+
+# Risk management - AGGRESSIVE
+risk_management:
+  max_daily_loss: 12.0         # 12% daily loss limit
+  max_drawdown: 35.0           # 35% max drawdown
+  emergency_stop: 40.0         # 40% emergency stop
+  
+# Features enabled
+features:
+  live_trading: true           # LIVE TRADING ENABLED
+  automated_trading: true
+  risk_management: true
+  daily_reports: true
+  24_7_operation: true
+
+# Monitoring
+monitoring:
+  health_checks: true
+  performance_tracking: true
+  email_alerts: true
