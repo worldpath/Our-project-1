@@ -1,63 +1,94 @@
-name: deploy
-on:
-  workflow_dispatch:
-  push:
-    branches: [ "main" ]
+name: Deploy Aggressive Crypto Bot
 
-permissions:
-  id-token: write
-  contents: read
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Azure login (OIDC)
-        uses: azure/login@v2
-        with:
-          client-id: ${{ vars.AZURE_CLIENT_ID }}
-          tenant-id: ${{ vars.AZURE_TENANT_ID }}
-          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+    - name: Log in to Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Show inputs (non-secret)
-        run: |
-          echo "RESOURCE_GROUP=${{ vars.RESOURCE_GROUP }}"
-          echo "LOCATION=${{ vars.LOCATION }}"
-          echo "ACA_ENV_NAME=${{ vars.ACA_ENV_NAME }}"
-          echo "APP_NAME=${{ vars.APP_NAME }}"
-          echo "ACR_NAME=${{ vars.ACR_NAME }}"
-          echo "IMAGE_NAME=${{ vars.IMAGE_NAME }}"
-          echo "IMAGE_TAG=${{ vars.IMAGE_TAG }}"
-          echo "TARGET_PORT=${{ vars.TARGET_PORT }}"
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
 
-      - name: Ensure Azure CLI extension
-        run: az extension add --name containerapp --upgrade
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy Container App
-        run: |
-          set -e
-          REGISTRY="${{ vars.ACR_NAME }}.azurecr.io"
-          IMAGE="$REGISTRY/${{ vars.IMAGE_NAME }}:${{ vars.IMAGE_TAG }}"
+    - name: Deploy Container App (Simple Method)
+      run: |
+        # Simple deployment without problematic parameters
+        az containerapp update \
+          --name crypto-trading-bot-prod-app \
+          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+          --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        
+        echo "Container app updated successfully!"
 
-          echo "Deploying $IMAGE to Container App ${{ vars.APP_NAME }} in RG ${{ vars.RESOURCE_GROUP }}"
+    - name: Configure Environment Variables
+      run: |
+        # Set environment variables in a separate step
+        az containerapp update \
+          --name crypto-trading-bot-prod-app \
+          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+          --replace-env-vars \
+            BINANCE_API_KEY="${{ secrets.BINANCE_API_KEY }}" \
+            BINANCE_API_SECRET="${{ secrets.BINANCE_API_SECRET }}" \
+            NOTIFICATION_EMAIL="${{ secrets.NOTIFICATION_EMAIL }}" \
+            INITIAL_CAPITAL="${{ secrets.INITIAL_CAPITAL }}" \
+            MAX_RISK_PER_TRADE="${{ secrets.MAX_RISK_PER_TRADE }}" \
+            ENVIRONMENT="production" \
+            CONFIG_PATH="config/aggressive_production.yaml"
+        
+        echo "Environment variables configured for aggressive trading!"
 
-          az containerapp up \
-            --name "${{ vars.APP_NAME }}" \
-            --resource-group "${{ vars.RESOURCE_GROUP }}" \
-            --environment "${{ vars.ACA_ENV_NAME }}" \
-            --location "${{ vars.LOCATION }}" \
-            --image "$IMAGE" \
-            --ingress external \
-            --target-port "${{ vars.TARGET_PORT }}" \
-            --min-replicas 1 \
-            --max-replicas 3 \
-            --set-env-vars "WEBSITES_PORT=${{ vars.TARGET_PORT }}"
+    - name: Verify Deployment
+      run: |
+        echo "Checking container app status..."
+        az containerapp show \
+          --name crypto-trading-bot-prod-app \
+          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+          --query "properties.provisioningState" \
+          --output tsv
+        
+        echo "Getting app URL..."
+        APP_URL=$(az containerapp show \
+          --name crypto-trading-bot-prod-app \
+          --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+          --query "properties.configuration.ingress.fqdn" \
+          --output tsv)
+        
+        echo "App URL: https://$APP_URL"
+        echo "Health check: https://$APP_URL/health"
+        echo "Status check: https://$APP_URL/status"
+        
+        echo "🚀 AGGRESSIVE CRYPTO TRADING BOT DEPLOYED!"
+        echo "Bot will start trading aggressively within minutes!"
 
-      - name: Show app URL
-        run: |
-          az containerapp show \
-            --name "${{ vars.APP_NAME }}" \
-            --resource-group "${{ vars.RESOURCE_GROUP }}" \
-            --query properties.configuration.ingress.fqdn -o tsv
