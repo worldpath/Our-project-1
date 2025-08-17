@@ -1,33 +1,9 @@
-# Multi-stage build for production crypto trading bot
-FROM python:3.11-slim as builder
-
-# Set build arguments
-ARG BUILDPLATFORM
-ARG TARGETPLATFORM
-
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    make \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create virtual environment
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Copy requirements and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Production stage
-FROM python:3.11-slim as production
+# Simplified Dockerfile for aggressive crypto trading bot
+FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PATH="/opt/venv/bin:$PATH" \
     ENVIRONMENT=production
 
 # Install runtime dependencies
@@ -36,17 +12,18 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
-# Copy virtual environment from builder
-COPY --from=builder /opt/venv /opt/venv
-
 # Create non-root user
 RUN groupadd -r trading && useradd -r -g trading trading
 
 # Create application directory
 WORKDIR /app
 
-# Copy application code
-COPY src/ ./src/
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy application files (simplified structure)
 COPY main.py .
 COPY config/ ./config/
 
