@@ -1,6 +1,6 @@
-# Compatible Requirements for Aggressive Crypto Trading Bot
-# ========================================================
-# Python 3.11 compatible trading system with institutional-grade features
+# Minimal Requirements for Aggressive Crypto Trading Bot
+# ======================================================
+# Ultra-compatible Python 3.11 trading system - Core functionality only
 
 # Core Python packages
 pandas>=2.0.0
@@ -20,111 +20,56 @@ ccxt>=4.0.0
 python-binance>=1.0.17
 yfinance>=0.2.0
 
-# Technical analysis and indicators
+# Technical analysis
 ta>=0.10.0
-pandas-ta>=0.3.14b
 
-# Scientific computing and machine learning
+# Scientific computing
 scipy>=1.10.0
 scikit-learn>=1.2.0
-numba>=0.56.0
 
-# Data visualization and analysis
+# Data visualization (basic)
 matplotlib>=3.6.0
-seaborn>=0.12.0
-plotly>=5.15.0
 
-# Async and concurrency
+# Async operations
 websockets>=11.0
 aiofiles>=23.0.0
 
-# Logging and monitoring
+# Logging
 loguru>=0.7.0
 
-# Progress and utilities
+# Utilities
 tqdm>=4.64.0
 psutil>=5.9.0
-schedule>=1.2.0
 
-# Testing framework
+# Testing
 pytest>=7.0.0
 pytest-asyncio>=0.20.0
-pytest-cov>=4.0.0
 
-# Database and storage
-sqlalchemy>=2.0.0
-redis>=4.5.0
-
-# Data formats and serialization
-openpyxl>=3.1.0
-
-# HTTP and networking
+# HTTP client
 httpx>=0.24.0
 
-# Cryptography and security
+# Security
 cryptography>=40.0.0
 
-# Time and date handling
+# Time handling
 pytz>=2023.3
 python-dateutil>=2.8.0
 
-# Configuration and environment
+# Configuration
 environs>=9.0.0
 
-# Mathematical and statistical libraries
-statsmodels>=0.14.0
-
-# Performance optimization
-bottleneck>=1.3.0
-
-# Memory and resource management
-memory-profiler>=0.60.0
-
-# Additional trading utilities
-websocket-client>=1.5.0
-
-# Risk management and portfolio optimization
-cvxpy>=1.3.0
-
-# Machine learning for regime detection
-xgboost>=1.7.0
-lightgbm>=3.3.0
-
-# Time series analysis
-pmdarima>=2.0.0
-
-# Backtesting and analysis
-backtesting>=0.3.3
-
-# Documentation and reporting
-jinja2>=3.1.0
-markdown>=3.4.0
-
-# Development and debugging
-ipython>=8.10.0
-
-# API rate limiting and caching
-ratelimit>=2.2.0
+# Caching
 cachetools>=5.2.0
 
-# Error tracking and monitoring
-sentry-sdk>=1.30.0
+# Data formats
+openpyxl>=3.1.0
 
-# Financial calculations
-empyrical>=0.5.5
-
-# WebSocket for real-time data
-python-socketio>=5.8.0
-
-# Advanced charting and visualization
-mplfinance>=0.12.0
+# Template engine
+jinja2>=3.1.0
 
 # Parallel processing
 joblib>=1.2.0
 
-# Configuration validation
-marshmallow>=3.19.0
-
-# System monitoring
-prometheus-client>=0.16.0
+# WebSocket client
+websocket-client>=1.5.0
 
