@@ -1,49 +1,77 @@
-
 version: "3.9"
+
 services:
-
-bot:
-  build: .
-  container_name: crypto-bot
-  healthcheck:
-    test: ["CMD", "python", "scripts/healthcheck_bot.py"]
-    interval: 2m
-    timeout: 10s
-    retries: 3
-    start_period: 3m
-
-    env_file: [.env]
+  bot:
+    build: .
+    container_name: crypto-bot
+    healthcheck:
+      test: ["CMD", "python", "scripts/healthcheck_bot.py"]
+      interval: 2m
+      timeout: 10s
+      retries: 3
+      start_period: 3m
+    environment:
+      - BINANCE_API_KEY=EdU9UIkAubGmXwDFDOj0ofGR0pMvdp2UOnCCAHBFATJGTKo7CfUHvRQxivDhPeaR
+      - BINANCE_API_SECRET=rPZ5mVM8uSuSGEuOMRULVcXWAXhzpZ0rUqGEB8D1lNH72cgraQC7Y3j2OTCdG60M
+      - BINANCE_US_BASE_URL=https://api.binance.us
+      - EXCHANGE_ADAPTER=connector
+      - ENVIRONMENT=production
+      - ENABLE_EMAIL_REPORTS=0
+      - REPORT_TO_EMAIL=bschneid7@gmail.com
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=bschneid7@gmail.com
+      - SMTP_PASS=zvir bsdq siac oszx
+      - SMTP_FROM=bschneid7@gmail.com
+      - HIST_PROVIDER=cryptocompare
+      - CRYPTOCOMPARE_API_KEY=168ea2820e1399a45e3049c45a40f89eca6c666eca8dfd1816ad478397fb83da
+      - SHADOW_LIVE=0
+      - MIN_NOTIONAL_USD=20
     command: bash -lc "python run_live.py"
     restart: unless-stopped
     volumes: [ "./data:/app" ]
     depends_on: [ dashboard ]
     networks: [ botnet ]
 
-
-dashboard:
-  build: .
-  container_name: crypto-dashboard
-  healthcheck:
-    test: ["CMD", "python", "scripts/healthcheck_dashboard.py"]
-    interval: 2m
-    timeout: 10s
-    retries: 3
-    start_period: 1m
-
-    env_file: [.env]
+  dashboard:
+    build: .
+    container_name: crypto-dashboard
+    healthcheck:
+      test: ["CMD", "python", "scripts/healthcheck_dashboard.py"]
+      interval: 2m
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+    environment:
+      - BINANCE_API_KEY=EdU9UIkAubGmXwDFDOj0ofGR0pMvdp2UOnCCAHBFATJGTKo7CfUHvRQxivDhPeaR
+      - BINANCE_API_SECRET=rPZ5mVM8uSuSGEuOMRULVcXWAXhzpZ0rUqGEB8D1lNH72cgraQC7Y3j2OTCdG60M
+      - BINANCE_US_BASE_URL=https://api.binance.us
+      - EXCHANGE_ADAPTER=connector
+      - ENVIRONMENT=production
+      - ENABLE_EMAIL_REPORTS=0
+      - REPORT_TO_EMAIL=PUT_YOUR_EMAIL_HERE
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=bschneid7@gmail.com
+      - SMTP_PASS=zvir bsdq siac oszx
+      - SMTP_FROM=bschneid7@gmail.com
+      - HIST_PROVIDER=cryptocompare
+      - CRYPTOCOMPARE_API_KEY=168ea2820e1399a45e3049c45a40f89eca6c666eca8dfd1816ad478397fb83da
+      - SHADOW_LIVE=0
+      - MIN_NOTIONAL_USD=20
     command: bash -lc "python dashboard/run_dashboard.py"
     expose: [ "8000" ]
     restart: unless-stopped
     volumes: [ "./data:/app" ]
     networks: [ botnet ]
 
-
-caddy:
-  image: caddy:2.8
-
+  caddy:
+    image: caddy:2.8
     container_name: crypto-proxy
     ports: [ "80:80", "443:443" ]
-    environment: [ "DOMAIN=${DOMAIN}", "CADDY_EMAIL=${CADDY_EMAIL}" ]
+    environment: 
+      - DOMAIN=${DOMAIN}
+      - CADDY_EMAIL=${CADDY_EMAIL}
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
@@ -51,19 +79,40 @@ caddy:
     depends_on: [ dashboard ]
     networks: [ botnet ]
 
-volumes: { caddy_data: {}, caddy_config: {} }
-networks: { botnet: { driver: bridge } }
+  watchdog:
+    image: python:3.11-slim
+    container_name: crypto-watchdog
+    environment:
+      - BINANCE_API_KEY=EdU9UIkAubGmXwDFDOj0ofGR0pMvdp2UOnCCAHBFATJGTKo7CfUHvRQxivDhPeaR
+      - BINANCE_API_SECRET=rPZ5mVM8uSuSGEuOMRULVcXWAXhzpZ0rUqGEB8D1lNH72cgraQC7Y3j2OTCdG60M
+      - BINANCE_US_BASE_URL=https://api.binance.us
+      - EXCHANGE_ADAPTER=connector
+      - ENVIRONMENT=production
+      - ENABLE_EMAIL_REPORTS=0
+      - REPORT_TO_EMAIL=PUT_YOUR_EMAIL_HERE
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=bschneid7@gmail.com
+      - SMTP_PASS=zvir bsdq siac oszx
+      - SMTP_FROM=bschneid7@gmail.com
+      - HIST_PROVIDER=cryptocompare
+      - CRYPTOCOMPARE_API_KEY=168ea2820e1399a45e3049c45a40f89eca6c666eca8dfd1816ad478397fb83da
+      - SHADOW_LIVE=0
+      - MIN_NOTIONAL_USD=20
+    volumes:
+      - ./data:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./scripts/watchdog.py:/watchdog.py:ro
+    command: ["python", "/watchdog.py"]
+    restart: unless-stopped
+    depends_on: [ bot, dashboard ]
+    networks: [ botnet ]
 
+volumes: 
+  caddy_data: {}
+  caddy_config: {}
 
-watchdog:
-  image: python:3.11-slim
-  container_name: crypto-watchdog
-  env_file: [.env]
-  volumes:
-    - ./data:/app
-    - /var/run/docker.sock:/var/run/docker.sock
-    - ./scripts/watchdog.py:/watchdog.py:ro
-  command: ["python", "/watchdog.py"]
-  restart: unless-stopped
-  depends_on: [ bot, dashboard ]
-  networks: [ botnet ]
+networks: 
+  botnet: 
+    driver: bridge
+
