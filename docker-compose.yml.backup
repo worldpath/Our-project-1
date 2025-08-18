@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  crypto-bot:
+    build: .
+    container_name: crypto-trading-bot
+    restart: unless-stopped
+    environment:
+      - BINANCEUS_API_KEY=${BINANCEUS_API_KEY:-}
+      - BINANCEUS_API_SECRET=${BINANCEUS_API_SECRET:-}
+      - ENVIRONMENT=production
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "8000:8000"
+
+  dashboard:
+    image: nginx:alpine
+    container_name: crypto-dashboard
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./dashboard:/usr/share/nginx/html
+    depends_on:
+      - crypto-bot
+
+networks:
+  default:
+    name: crypto-trading-network

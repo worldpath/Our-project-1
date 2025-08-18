@@ -1,0 +1,6 @@
+{
+  email {$CADDY_EMAIL}
+}
+{$DOMAIN} {
+  reverse_proxy crypto-dashboard:8000
+}
