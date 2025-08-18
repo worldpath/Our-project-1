@@ -26,7 +26,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Copy application files (simplified structure)
 COPY *.py .
 COPY config/ ./config/
-COPY scripts/ ./scripts/
 COPY dashboard/ ./dashboard/
 
 # Create necessary directories
