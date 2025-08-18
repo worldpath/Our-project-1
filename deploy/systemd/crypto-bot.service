@@ -1,0 +1,15 @@
+
+[Unit]
+Description=Crypto Bot Live Trader
+After=network.target
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/crypto-bot
+Environment="PYTHONPATH=/opt/crypto-bot"
+EnvironmentFile=/opt/crypto-bot/.env
+ExecStart=/opt/crypto-bot/.venv/bin/python run_live.py
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

@@ -1,278 +1,59 @@
-name: Deploy Aggressive Crypto Bot
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'prod'
-        type: choice
-        options:
-        - dev
-        - staging
-        - prod
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: worldpath/crypto-trading-bot
-
+name: deploy
+on: { push: { branches: [ "main" ] } }
 jobs:
-  test:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest pytest-cov pytest-asyncio
-    
-    - name: Run basic validation
-      run: |
-        echo "✅ Dependencies installed successfully"
-        echo "✅ Python environment ready"
-        echo "✅ Configuration files present"
-        echo "✅ Trading bot validation complete"
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Log in to Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-        tags: |
-          type=raw,value=latest
-
-    - name: Build and push Docker image
-      id: build
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-
-  deploy-infrastructure:
-    needs: [test, build]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
-    environment: ${{ github.event.inputs.environment || 'prod' }}
-    outputs:
-      resource-group: ${{ steps.deploy.outputs.resourceGroupName }}
-      container-app-name: ${{ steps.deploy.outputs.containerAppName }}
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Create Resource Group
-      run: |
-        az group create \
-          --name ${{ vars.AZURE_RESOURCE_GROUP }} \
-          --location eastus
-
-    - name: Create Container App Environment
-      run: |
-        # Check if environment exists
-        if ! az containerapp env show --name crypto-trading-env --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} >/dev/null 2>&1; then
-          echo "Creating Container App Environment..."
-          az containerapp env create \
-            --name crypto-trading-env \
-            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-            --location eastus
-        else
-          echo "Container App Environment already exists"
-        fi
-
-    - name: Deploy Azure Infrastructure
-      id: deploy
-      run: |
-        echo "resourceGroupName=${{ vars.AZURE_RESOURCE_GROUP }}" >> $GITHUB_OUTPUT
-        echo "containerAppName=crypto-trading-bot-${{ github.event.inputs.environment || 'prod' }}-app" >> $GITHUB_OUTPUT
-        echo "✅ Infrastructure ready for deployment"
-
-  deploy-application:
-    needs: [build, deploy-infrastructure]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
-    environment: ${{ github.event.inputs.environment || 'prod' }}
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Deploy Container App
-      run: |
-        APP_NAME="crypto-trading-bot-${{ github.event.inputs.environment || 'prod' }}-app"
-        
-        # Check if container app exists
-        if az containerapp show --name $APP_NAME --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} >/dev/null 2>&1; then
-          echo "Updating existing container app..."
-          az containerapp update \
-            --name $APP_NAME \
-            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-            --image ${{ needs.build.outputs.image-tag }} \
-            --set-env-vars \
-              BINANCE_API_KEY=${{ secrets.BINANCE_API_KEY }} \
-              BINANCE_API_SECRET=${{ secrets.BINANCE_API_SECRET }} \
-              NOTIFICATION_EMAIL=${{ vars.NOTIFICATION_EMAIL }} \
-              INITIAL_CAPITAL=${{ vars.INITIAL_CAPITAL }} \
-              MAX_RISK_PER_TRADE=${{ vars.MAX_RISK_PER_TRADE }} \
-              ENVIRONMENT=production \
-              CONFIG_PATH=config/aggressive_production.yaml
-        else
-          echo "Creating new container app..."
-          az containerapp create \
-            --name $APP_NAME \
-            --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-            --environment crypto-trading-env \
-            --image ${{ needs.build.outputs.image-tag }} \
-            --target-port 8080 \
-            --ingress external \
-            --min-replicas 1 \
-            --max-replicas 1 \
-            --cpu 0.5 \
-            --memory 1Gi \
-            --env-vars \
-              BINANCE_API_KEY=${{ secrets.BINANCE_API_KEY }} \
-              BINANCE_API_SECRET=${{ secrets.BINANCE_API_SECRET }} \
-              NOTIFICATION_EMAIL=${{ vars.NOTIFICATION_EMAIL }} \
-              INITIAL_CAPITAL=${{ vars.INITIAL_CAPITAL }} \
-              MAX_RISK_PER_TRADE=${{ vars.MAX_RISK_PER_TRADE }} \
-              ENVIRONMENT=production \
-              CONFIG_PATH=config/aggressive_production.yaml
-        fi
-
-    - name: Verify Deployment
-      run: |
-        APP_NAME="crypto-trading-bot-${{ github.event.inputs.environment || 'prod' }}-app"
-        
-        # Wait for deployment to complete
-        echo "Waiting for deployment to complete..."
-        sleep 60
-        
-        # Check container app status
-        STATUS=$(az containerapp show \
-          --name $APP_NAME \
-          --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-          --query "properties.provisioningState" \
-          --output tsv)
-        
-        echo "Container app status: $STATUS"
-        
-        if [ "$STATUS" = "Succeeded" ]; then
-          echo "✅ Deployment successful!"
-        else
-          echo "❌ Deployment status: $STATUS"
-          exit 1
-        fi
-
-    - name: Run Health Check
-      run: |
-        APP_NAME="crypto-trading-bot-${{ github.event.inputs.environment || 'prod' }}-app"
-        
-        # Get the container app URL
-        APP_URL=$(az containerapp show \
-          --name $APP_NAME \
-          --resource-group ${{ vars.AZURE_RESOURCE_GROUP }} \
-          --query "properties.configuration.ingress.fqdn" \
-          --output tsv)
-        
-        echo "Application URL: https://$APP_URL"
-        
-        # Wait for app to be ready
-        echo "Waiting for application to be ready..."
-        for i in {1..20}; do
-          if curl -f "https://${APP_URL}/health" > /dev/null 2>&1; then
-            echo "✅ Application is healthy!"
-            echo "🚀 Aggressive Crypto Trading Bot is LIVE!"
-            echo "📊 Health endpoint: https://${APP_URL}/health"
-            echo "📈 Status endpoint: https://${APP_URL}/status"
-            echo "💰 Live trading with aggressive settings is now active!"
-            break
-          fi
-          echo "Attempt $i/20: Application not ready yet..."
-          sleep 15
-        done
-
-  notify:
-    needs: [deploy-application]
-    runs-on: ubuntu-latest
-    if: always() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch')
-    
-    steps:
-    - name: Notify Success
-      if: needs.deploy-application.result == 'success'
-      run: |
-        echo "🎉 AGGRESSIVE CRYPTO TRADING BOT DEPLOYED SUCCESSFULLY!"
-        echo "=============================================="
-        echo "🚀 Environment: ${{ github.event.inputs.environment || 'prod' }}"
-        echo "📦 Image: ${{ needs.build.outputs.image-tag }}"
-        echo "🔗 Commit: ${{ github.sha }}"
-        echo ""
-        echo "🔥 LIVE TRADING ACTIVE:"
-        echo "💰 30% Portfolio Risk"
-        echo "⚡ 15% Position Sizes"  
-        echo "📊 8 Concurrent Positions"
-        echo "🕐 15-Minute Trading Cycles"
-        echo "🎯 10 Crypto Pairs"
-        echo "💹 Real Money Management"
-        echo ""
-        echo "✅ 24/7 autonomous operation is now LIVE!"
-        echo "📧 Daily reports will be sent to your email"
-        echo "🌙 Bot is running independently on Azure"
-        echo "💰 MAKING MONEY WHILE YOU SLEEP!"
-        echo "=============================================="
-
-    - name: Notify Failure
-      if: needs.deploy-application.result == 'failure'
-      run: |
-        echo "❌ DEPLOYMENT FAILED!"
-        echo "Please check the logs above for specific error details."
-        echo "Common issues:"
-        echo "- Azure credentials not configured correctly"
-        echo "- Resource group permissions"
-        echo "- Container image build failures"
-        echo "- Environment variables not set properly"
-        exit 1
-
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with: { registry: ghcr.io, username: ${{ github.actor }}, password: ${{ secrets.GITHUB_TOKEN }} }
+      - uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: ghcr.io/${{ github.repository_owner }}/crypto-bot:latest
+      - uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          source: |
+            docker-compose.yml
+            caddy/Caddyfile
+            .env.example
+          target: /opt/crypto-bot
+      - uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            set -e
+            cd /opt/crypto-bot
+            mkdir -p data caddy
+            mv Caddyfile caddy/Caddyfile || true
+            if [ ! -f .env ]; then
+              touch .env
+              echo BINANCEUS_API_KEY=${{ secrets.BINANCEUS_API_KEY }} >> .env
+              echo BINANCEUS_API_SECRET=${{ secrets.BINANCEUS_API_SECRET }} >> .env
+              echo CONFIG_PATH=config/aggressive_production.yaml >> .env
+              echo DASHBOARD_JWT_SECRET=${{ secrets.DASHBOARD_JWT_SECRET }} >> .env
+              echo DASHBOARD_USER=${{ secrets.DASHBOARD_USER }} >> .env
+              echo DASHBOARD_PASS=${{ secrets.DASHBOARD_PASS }} >> .env
+              echo DOMAIN=${{ secrets.DOMAIN }} >> .env
+              echo CADDY_EMAIL=${{ secrets.CADDY_EMAIL }} >> .env
+            fi
+            if ! command -v docker >/dev/null; then curl -fsSL https://get.docker.com | sh; fi
+            if ! docker compose version >/dev/null 2>&1; then
+              DOCKER_CONFIG=${HOME}/.docker mkdir -p $DOCKER_CONFIG/cli-plugins
+              curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+              chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+            fi
+            docker compose pull || true
+            docker compose up -d --build
