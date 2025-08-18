@@ -24,8 +24,8 @@ jobs:
           
           # Create .env file with API credentials
           cat > .env << EOL
-          BINANCEUS_API_KEY=${{ secrets.BINANCEUS_API_KEY }}
-          BINANCEUS_API_SECRET=${{ secrets.BINANCEUS_API_SECRET }}
+          BINANCE_API_KEY=${{ secrets.BINANCE_API_KEY }}
+          BINANCE_API_SECRET=${{ secrets.BINANCE_API_SECRET }}
           ENVIRONMENT=production
           EOL
           
