@@ -21,8 +21,18 @@ jobs:
         script: |
           cd /opt/crypto-bot/Our-project-1
           git pull origin main
-          docker-compose down
-          docker-compose up -d --build
+          
+          # Create .env file with API credentials
+          cat > .env << EOL
+          BINANCEUS_API_KEY=${{ secrets.BINANCEUS_API_KEY }}
+          BINANCEUS_API_SECRET=${{ secrets.BINANCEUS_API_SECRET }}
+          ENVIRONMENT=production
+          EOL
+          
+          # Restart containers with new environment
+          docker compose down
+          docker compose up -d --build
+          
           echo "🚀 Professional Crypto Trading System Deployed!"
-          echo "💰 Live trading active with institutional risk management"
+          echo "💰 Live trading active with API credentials"
           docker ps
