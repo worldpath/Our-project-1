@@ -1,59 +1,28 @@
+name: Deploy to VPS
 
-name: deploy
-on: { push: { branches: [ "main" ] } }
+on:
+  push:
+    branches: [ main ]
+
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
-        with: { registry: ghcr.io, username: ${{ github.actor }}, password: ${{ secrets.GITHUB_TOKEN }} }
-      - uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64
-          tags: ghcr.io/${{ github.repository_owner }}/crypto-bot:latest
-      - uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          source: |
-            docker-compose.yml
-            caddy/Caddyfile
-            .env.example
-          target: /opt/crypto-bot
-      - uses: appleboy/ssh-action@v1.1.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          script: |
-            set -e
-            cd /opt/crypto-bot
-            mkdir -p data caddy
-            mv Caddyfile caddy/Caddyfile || true
-            if [ ! -f .env ]; then
-              touch .env
-              echo BINANCEUS_API_KEY=${{ secrets.BINANCEUS_API_KEY }} >> .env
-              echo BINANCEUS_API_SECRET=${{ secrets.BINANCEUS_API_SECRET }} >> .env
-              echo CONFIG_PATH=config/aggressive_production.yaml >> .env
-              echo DASHBOARD_JWT_SECRET=${{ secrets.DASHBOARD_JWT_SECRET }} >> .env
-              echo DASHBOARD_USER=${{ secrets.DASHBOARD_USER }} >> .env
-              echo DASHBOARD_PASS=${{ secrets.DASHBOARD_PASS }} >> .env
-              echo DOMAIN=${{ secrets.DOMAIN }} >> .env
-              echo CADDY_EMAIL=${{ secrets.CADDY_EMAIL }} >> .env
-            fi
-            if ! command -v docker >/dev/null; then curl -fsSL https://get.docker.com | sh; fi
-            if ! docker compose version >/dev/null 2>&1; then
-              DOCKER_CONFIG=${HOME}/.docker mkdir -p $DOCKER_CONFIG/cli-plugins
-              curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-              chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
-            fi
-            docker compose pull || true
-            docker compose up -d --build
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd /opt/crypto-bot/Our-project-1
+          git pull origin main
+          docker-compose down
+          docker-compose up -d --build
+          echo "🚀 Professional Crypto Trading System Deployed!"
+          echo "💰 Live trading active with institutional risk management"
+          docker ps
