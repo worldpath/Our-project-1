@@ -1,46 +1,28 @@
-# Simplified Dockerfile for aggressive crypto trading bot
+# Dockerfile
 FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    ENVIRONMENT=production
-
-# Install runtime dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
-
-# Create non-root user
-RUN groupadd -r trading && useradd -r -g trading trading
-
-# Create application directory
 WORKDIR /app
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app
 
-# Copy requirements and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential curl && rm -rf /var/lib/apt/lists/*
 
-# Copy application files (simplified structure)
-COPY *.py .
-COPY config/ ./config/
-COPY dashboard/ ./dashboard/
+# Python deps
+COPY requirements.txt /app/requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Create necessary directories
-RUN mkdir -p /app/data /app/logs && \
-    chown -R trading:trading /app
+# App code
+COPY . /app
 
-# Switch to non-root user
-USER trading
+# Defaults (overridden by .env / compose)
+ENV CONFIG_PATH=config/aggressive_production.yaml \
+    DASHBOARD_HOST=0.0.0.0 \
+    DASHBOARD_PORT=8000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+EXPOSE 8000
 
-# Expose port
-EXPOSE 8080
-
-# Run the application
-CMD ["python", "main.py"]
+# We start the bot from compose with an absolute path, but leave a sane default here too:
+CMD ["bash","-lc","python /app/run_live.py"]
