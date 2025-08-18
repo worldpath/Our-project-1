@@ -5,25 +5,22 @@ services:
     build: .
     container_name: crypto-bot
     env_file: [.env]
-    # Keep code in the image; only persist data under /app/data
+    # Persist only runtime data; keep code in the image
     volumes:
       - ./data:/app/data
-    # Explicit absolute path so we never depend on $PWD
+    # Absolute path avoids CWD ambiguity
     command: bash -lc "python /app/run_live.py"
     restart: unless-stopped
-    # Healthcheck: ensures risk_state or trade_history updated recently
     healthcheck:
       test: ["CMD", "python", "scripts/healthcheck_bot.py"]
       interval: 2m
       timeout: 10s
       retries: 3
       start_period: 3m
-    # Set defaults so you don't need to edit .env right now
+    # Useful defaults so you don't have to edit .env immediately
     environment:
-      # Where logs/state go (the mounted host directory)
       TRADE_LOG_FILE: "/app/data/trade_history.csv"
       RISK_STATE_PATH: "/app/data/risk_state.json"
-      # Health thresholds (adjust if you like)
       BOT_HEALTH_MAX_STALE_MIN: "45"
     depends_on:
       - dashboard
@@ -55,8 +52,9 @@ services:
     environment:
       DOMAIN: ${DOMAIN}
       CADDY_EMAIL: ${CADDY_EMAIL}
+    # Mount the whole folder to avoid file/dir mismatch errors
     volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy:/etc/caddy
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -67,7 +65,6 @@ services:
     image: python:3.11-slim
     container_name: crypto-watchdog
     env_file: [.env]
-    # Has to see the data files and Docker socket
     volumes:
       - ./data:/app/data
       - /var/run/docker.sock:/var/run/docker.sock
