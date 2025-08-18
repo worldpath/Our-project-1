@@ -24,8 +24,10 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy application files (simplified structure)
-COPY main.py .
+COPY *.py .
 COPY config/ ./config/
+COPY scripts/ ./scripts/
+COPY dashboard/ ./dashboard/
 
 # Create necessary directories
 RUN mkdir -p /app/data /app/logs && \
