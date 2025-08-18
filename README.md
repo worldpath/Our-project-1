@@ -1,3 +1,1 @@
-# Our-project-1 — Autonomous Crypto Trading Agent
-
-
+# Professional Crypto Trading System - Live Trading Ready
