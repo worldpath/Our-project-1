@@ -1,0 +1,183 @@
+# Ultra-Aggressive Trading Bot Configuration
+# ==========================================
+# Maximum 1000x potential configuration with institutional-grade features
+
+# TRADING CONFIGURATION
+trading:
+  mode: "ultra_aggressive"
+  max_concurrent_positions: 12
+  base_capital: 3804.0  # Your starting capital
+  
+  # Risk Management (Dynamic - scales based on performance)
+  risk_management:
+    base_risk_per_trade: 0.04  # 4% base risk
+    max_risk_per_trade: 0.08   # 8% max when performing well
+    min_risk_per_trade: 0.01   # 1% min during drawdowns
+    max_daily_risk: 0.15       # 15% max daily risk
+    max_correlation: 0.7       # Max correlation between positions
+    
+  # Position Sizing
+  position_sizing:
+    method: "kelly_criterion"
+    volatility_adjustment: true
+    atr_multiplier: 2.0
+    
+  # Trading Pairs (ALL 183 Binance.US pairs)
+  trading_pairs_file: "all_binance_usdt_pairs.json"
+  use_all_pairs: true
+  
+# STRATEGY CONFIGURATION  
+strategies:
+  momentum:
+    enabled: true
+    weight: 0.4
+    lookback: 20
+    threshold: 0.02
+    volatility_filter: true
+    volatility_threshold: 0.03
+    
+  mean_reversion:
+    enabled: true
+    weight: 0.35
+    rsi_oversold: 25
+    rsi_overbought: 75
+    macd_confirmation: true
+    
+  breakout:
+    enabled: true
+    weight: 0.25
+    atr_multiplier: 2.0
+    volume_confirmation: true
+    short_selling: true  # Enable short selling in downtrends
+    
+# REGIME DETECTION
+regime_detection:
+  enabled: true
+  method: "ml_enhanced"
+  lookback_days: 30
+  update_frequency: "1h"
+  features:
+    - "volatility"
+    - "volume_trend" 
+    - "price_momentum"
+    - "market_breadth"
+
+# EXECUTION ENGINE
+execution:
+  engine_type: "enhanced"
+  
+  # TWAP Configuration
+  twap:
+    enabled: true
+    min_order_size: 1000.0  # USD
+    time_horizon: 300       # 5 minutes
+    slice_count: 10
+    
+  # Iceberg Orders
+  iceberg:
+    enabled: true
+    min_order_size: 2000.0  # USD
+    visible_ratio: 0.1      # Show only 10% at a time
+    
+  # Market Impact
+  market_impact:
+    max_impact: 0.002  # 0.2% max impact
+    liquidity_buffer: 0.05
+    
+# MONITORING AND ALERTS
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9090
+    metrics_interval: 30  # seconds
+    
+  alerts:
+    pnl_thresholds:
+      warning: -0.05   # -5% daily loss
+      critical: -0.10  # -10% daily loss
+    
+    performance_alerts:
+      win_rate_threshold: 0.4
+      profit_factor_threshold: 1.2
+      
+    # Communication channels
+    email:
+      enabled: true
+      smtp_server: "smtp.gmail.com"
+      smtp_port: 587
+      
+    telegram:
+      enabled: true
+      bot_token: "${TELEGRAM_BOT_TOKEN}"
+      chat_id: "${TELEGRAM_CHAT_ID}"
+
+# TAX CONFIGURATION
+tax_tracking:
+  enabled: true
+  method: "FIFO"  # FIFO, LIFO, or SPECIFIC_ID
+  include_fees: true
+  auto_export: true
+  export_format: "csv"
+  
+# BACKTESTING
+backtesting:
+  enabled: true
+  start_date: "2023-01-01"
+  end_date: "2024-12-31"
+  initial_capital: 10000.0
+  
+  # Monte Carlo
+  monte_carlo:
+    enabled: true
+    simulations: 1000
+    confidence_levels: [0.95, 0.99]
+    
+  # Walk Forward Analysis
+  walk_forward:
+    enabled: true
+    train_period_months: 6
+    test_period_months: 1
+    
+# API CONFIGURATION
+binance:
+  api_key: "${BINANCE_API_KEY}"
+  api_secret: "${BINANCE_API_SECRET}"
+  testnet: false  # Set to true for testing
+  
+# LOGGING
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/ultra_aggressive_bot.log"
+  
+# PERFORMANCE TRACKING
+performance:
+  track_metrics:
+    - "total_return"
+    - "sharpe_ratio"
+    - "max_drawdown"
+    - "win_rate"
+    - "profit_factor"
+    - "calmar_ratio"
+    - "sortino_ratio"
+    
+  benchmark: "BTC"
+  
+# ADVANCED FEATURES
+advanced:
+  # Machine Learning
+  ml_features:
+    enabled: true
+    retrain_frequency: "daily"
+    model_type: "ensemble"
+    
+  # Market Regime Adaptation
+  adaptive_parameters:
+    enabled: true
+    regime_sensitivity: 0.7
+    
+  # Order Flow Analysis
+  order_flow:
+    enabled: true
+    depth_levels: 5
+    imbalance_threshold: 0.3

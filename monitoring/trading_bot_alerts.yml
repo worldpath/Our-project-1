@@ -1,0 +1,104 @@
+# Enhanced Trading Bot - Alert Rules
+# ==================================
+
+groups:
+- name: trading_bot_alerts
+  rules:
+  
+  # Portfolio PnL Alerts
+  - alert: DailyLossWarning
+    expr: trading_bot_daily_pnl_percent < -5
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Daily PnL Warning"
+      description: "Daily PnL has dropped to {{ $value }}% (below -5%)"
+
+  - alert: DailyLossCritical
+    expr: trading_bot_daily_pnl_percent < -10
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "CRITICAL Daily Loss"
+      description: "Daily PnL has dropped to {{ $value }}% (below -10%)"
+
+  # Win Rate Alerts
+  - alert: LowWinRate
+    expr: trading_bot_win_rate < 0.4
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Low Win Rate Alert"
+      description: "Win rate has dropped to {{ $value }} (below 40%)"
+
+  # Profit Factor Alerts
+  - alert: LowProfitFactor
+    expr: trading_bot_profit_factor < 1.2
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Low Profit Factor"
+      description: "Profit factor has dropped to {{ $value }} (below 1.2)"
+
+  # API Latency Alerts
+  - alert: HighAPILatency
+    expr: trading_bot_api_latency_seconds > 2
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High API Latency"
+      description: "API latency is {{ $value }}s (above 2s)"
+
+  # System Health Alerts
+  - alert: TradingBotDown
+    expr: up{job="enhanced-trading-bot"} == 0
+    for: 30s
+    labels:
+      severity: critical
+    annotations:
+      summary: "Trading Bot Down"
+      description: "Enhanced Trading Bot is not responding"
+
+  - alert: HighMemoryUsage
+    expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.9
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High Memory Usage"
+      description: "Memory usage is above 90%"
+
+  # Trading Volume Alerts
+  - alert: LowTradingVolume
+    expr: rate(trading_bot_trades_total[5m]) < 0.01
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Low Trading Activity"
+      description: "Trading volume is unusually low"
+
+  # Risk Management Alerts
+  - alert: HighDrawdown
+    expr: trading_bot_max_drawdown_percent > 15
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High Drawdown Alert"
+      description: "Maximum drawdown has reached {{ $value }}% (above 15%)"
+
+  # Position Size Alerts
+  - alert: LargePosition
+    expr: trading_bot_position_size_percent > 8
+    for: 1m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Large Position Size"
+      description: "Position size is {{ $value }}% (above 8%)"

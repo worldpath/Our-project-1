@@ -1,0 +1,43 @@
+# Enhanced Trading Bot - Prometheus Configuration
+# ==============================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "trading_bot_alerts.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # Enhanced Trading Bot Metrics
+  - job_name: 'enhanced-trading-bot'
+    static_configs:
+      - targets: ['enhanced-trading-bot:9090']
+    scrape_interval: 10s
+    metrics_path: /metrics
+
+  # Prometheus Self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node Exporter (System Metrics)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # cAdvisor (Container Metrics)
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+
+  # Redis Metrics
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
