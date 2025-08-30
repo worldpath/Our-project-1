@@ -38,6 +38,28 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# Load environment variables
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+    print("✅ Environment variables loaded successfully!")
+except ImportError:
+    print("⚠️ python-dotenv not installed, loading .env manually...")
+    # Manual .env loading
+    try:
+        with open('.env', 'r') as f:
+            for line in f:
+                if line.strip() and not line.startswith('#'):
+                    key, value = line.strip().split('=', 1)
+                    os.environ[key] = value
+        print("✅ Environment variables loaded manually!")
+    except Exception as e:
+        print(f"❌ Failed to load .env file: {e}")
+        print("📝 Available environment variables:")
+        for key in os.environ.keys():
+            if 'BINANCE' in key:
+                print(f"  {key}={'*' * len(os.environ[key])}")  # Hide sensitive values
+
 # Configuration and Data Models
 @dataclass
 class TradingConfig:
@@ -1066,7 +1088,7 @@ Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
         config = uvicorn.Config(
             app=self.app,
             host="0.0.0.0",
-            port=8080,
+            port=8889,
             log_level="info"
         )
         server = uvicorn.Server(config)

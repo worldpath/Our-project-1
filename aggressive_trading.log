@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/user/webapp/main.py", line 1083, in <module>
+    bot = AggressiveTradingBot()
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/webapp/main.py", line 682, in __init__
+    raise ValueError("Binance API credentials not found in environment variables")
+ValueError: Binance API credentials not found in environment variables
