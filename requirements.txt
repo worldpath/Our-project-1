@@ -83,12 +83,16 @@ pytz>=2023.3
 prometheus-client>=0.17.0
 psutil>=5.9.0
 
-# Database for tax records
-sqlite3
+# Database for PostgreSQL (recommended by ChatGPT-5 Pro)
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
 
 # PDF generation for tax reports
 fpdf>=3.0.0
 
 # Enhanced data analysis
 seaborn>=0.12.0
+
+# Additional ChatGPT-5 Pro recommendations
+prometheus-client>=0.17.0
 

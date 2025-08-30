@@ -3,8 +3,10 @@
 Aggressive Crypto Trading Bot - Full Production System
 ====================================================
 
-LIVE TRADING MODE - 30% Portfolio Risk, 15% Position Sizes
+LIVE TRADING MODE - MODERATE RISK PROFILE (Default: 25% Portfolio Risk, 10% Position Sizes)
 Autonomous cryptocurrency trading system with institutional-grade features.
+
+⚠️ WARNING: Check your .env file for actual risk settings! Default values are MODERATE.
 
 Features:
 - Advanced Trading Strategies (Momentum, Mean Reversion, Breakout)
