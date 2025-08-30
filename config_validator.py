@@ -11,6 +11,13 @@ import logging
 from typing import Dict, Any, Optional
 from bot_enhancements.risk_constraints import RiskConfig, Profile
 
+# Load environment variables first
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 class ConfigValidator:
     """Validates trading bot configuration for safety and consistency"""
     

@@ -67,7 +67,7 @@ class RiskSettings(BaseModel):
     consecutive_loss_kill: int
 
 class TradingSettings(BaseModel):
-    min_volume_usd: float = 5_000_000.0
+    min_volume_usd: float = 50_000.0  # $50k minimum 24h volume (ensures liquidity for small trades)
     max_spread_bps: float = 25.0
     top_n_symbols: int = 30
     tp_percent: float = 2.0

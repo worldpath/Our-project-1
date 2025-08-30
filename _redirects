@@ -1,0 +1,4 @@
+# CloudFlare Pages Redirects for Crypto Trading Bot Control UI
+/api/* https://your-backend-url.com/api/:splat 200
+/ws/* https://your-backend-url.com/ws/:splat 200
+/* /index.html 200
