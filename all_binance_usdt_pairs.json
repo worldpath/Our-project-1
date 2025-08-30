@@ -1,1660 +1,1100 @@
-{
-  "total_pairs": 183,
-  "current_pairs": [
-    "BTC/USDT",
-    "ETH/USDT",
-    "ADA/USDT",
-    "SOL/USDT",
-    "MATIC/USDT",
-    "XRP/USDT",
-    "DOGE/USDT",
-    "AVAX/USDT",
-    "DOT/USDT",
-    "LINK/USDT"
-  ],
-  "all_pairs": [
-    "1000MOG/USDT",
-    "1000REKT/USDT",
-    "1INCH/USDT",
-    "A2Z/USDT",
-    "AAVE/USDT",
-    "ACH/USDT",
-    "ADA/USDT",
-    "ADX/USDT",
-    "AIXBT/USDT",
-    "ALGO/USDT",
-    "ALICE/USDT",
-    "ALPINE/USDT",
-    "ANIME/USDT",
-    "ANKR/USDT",
-    "APE/USDT",
-    "API3/USDT",
-    "APT/USDT",
-    "ARB/USDT",
-    "ASTR/USDT",
-    "ATOM/USDT",
-    "AUDIO/USDT",
-    "AVAX/USDT",
-    "AXL/USDT",
-    "AXS/USDT",
-    "BAND/USDT",
-    "BAT/USDT",
-    "BCH/USDT",
-    "BICO/USDT",
-    "BLUR/USDT",
-    "BNB/USDT",
-    "BNT/USDT",
-    "BONK/USDT",
-    "BOSON/USDT",
-    "BRETT/USDT",
-    "BTC/USDT",
-    "BTRST/USDT",
-    "CELO/USDT",
-    "CELR/USDT",
-    "CHZ/USDT",
-    "COMP/USDT",
-    "COTI/USDT",
-    "CRV/USDT",
-    "CTSI/USDT",
-    "D/USDT",
-    "DASH/USDT",
-    "DATA/USDT",
-    "DGB/USDT",
-    "DIA/USDT",
-    "DOGE/USDT",
-    "DOT/USDT",
-    "EGLD/USDT",
-    "EIGEN/USDT",
-    "ENA/USDT",
-    "ENJ/USDT",
-    "ENS/USDT",
-    "EOS/USDT",
-    "ETC/USDT",
-    "ETH/USDT",
-    "FARTCOIN/USDT",
-    "FET/USDT",
-    "FIL/USDT",
-    "FLOKI/USDT",
-    "FLOW/USDT",
-    "FLUX/USDT",
-    "FORT/USDT",
-    "FORTH/USDT",
-    "G/USDT",
-    "GALA/USDT",
-    "GLM/USDT",
-    "GRT/USDT",
-    "GTC/USDT",
-    "HBAR/USDT",
-    "HYPE/USDT",
-    "ICP/USDT",
-    "ICX/USDT",
-    "ILV/USDT",
-    "IMX/USDT",
-    "IOST/USDT",
-    "IOTA/USDT",
-    "IOTX/USDT",
-    "JAM/USDT",
-    "JTO/USDT",
-    "JUP/USDT",
-    "KAITO/USDT",
-    "KAVA/USDT",
-    "KDA/USDT",
-    "KNC/USDT",
-    "KSM/USDT",
-    "LAYER/USDT",
-    "LAZIO/USDT",
-    "LDO/USDT",
-    "LINK/USDT",
-    "LOOM/USDT",
-    "LPT/USDT",
-    "LRC/USDT",
-    "LSK/USDT",
-    "LTC/USDT",
-    "LTO/USDT",
-    "MAGIC/USDT",
-    "MANA/USDT",
-    "MASK/USDT",
-    "ME/USDT",
-    "METIS/USDT",
-    "MKR/USDT",
-    "MOODENG/USDT",
-    "NEAR/USDT",
-    "NEIRO/USDT",
-    "NEO/USDT",
-    "NMR/USDT",
-    "NOBODY/USDT",
-    "OCEAN/USDT",
-    "OGN/USDT",
-    "ONDO/USDT",
-    "ONE/USDT",
-    "ONG/USDT",
-    "ONT/USDT",
-    "OP/USDT",
-    "ORBS/USDT",
-    "ORCA/USDT",
-    "OXT/USDT",
-    "PAXG/USDT",
-    "PENGU/USDT",
-    "PEPE/USDT",
-    "PNUT/USDT",
-    "POL/USDT",
-    "POLYX/USDT",
-    "POND/USDT",
-    "POPCAT/USDT",
-    "PORTO/USDT",
-    "PROM/USDT",
-    "QNT/USDT",
-    "QTUM/USDT",
-    "RAD/USDT",
-    "RARE/USDT",
-    "REEF/USDT",
-    "RENDER/USDT",
-    "REQ/USDT",
-    "RLC/USDT",
-    "ROSE/USDT",
-    "RVN/USDT",
-    "S/USDT",
-    "SAND/USDT",
-    "SANTOS/USDT",
-    "SHIB/USDT",
-    "SKL/USDT",
-    "SLP/USDT",
-    "SNX/USDT",
-    "SOL/USDT",
-    "SPX/USDT",
-    "STG/USDT",
-    "STMX/USDT",
-    "STORJ/USDT",
-    "SUI/USDT",
-    "SUSHI/USDT",
-    "SYS/USDT",
-    "T/USDT",
-    "TFUEL/USDT",
-    "THETA/USDT",
-    "TLM/USDT",
-    "TOSHI/USDT",
-    "TRAC/USDT",
-    "TRUMP/USDT",
-    "TURBO/USDT",
-    "UNI/USDT",
-    "USELESS/USDT",
-    "VET/USDT",
-    "VIRTUAL/USDT",
-    "VOXEL/USDT",
-    "VTHO/USDT",
-    "WAXP/USDT",
-    "WIF/USDT",
-    "WLD/USDT",
-    "XDC/USDT",
-    "XEC/USDT",
-    "XLM/USDT",
-    "XNO/USDT",
-    "XRP/USDT",
-    "XTZ/USDT",
-    "YFI/USDT",
-    "ZEC/USDT",
-    "ZEN/USDT",
-    "ZIL/USDT",
-    "ZRX/USDT"
-  ],
-  "additional_pairs": [
-    "1000MOG/USDT",
-    "1000REKT/USDT",
-    "1INCH/USDT",
-    "A2Z/USDT",
-    "AAVE/USDT",
-    "ACH/USDT",
-    "ADX/USDT",
-    "AIXBT/USDT",
-    "ALGO/USDT",
-    "ALICE/USDT",
-    "ALPINE/USDT",
-    "ANIME/USDT",
-    "ANKR/USDT",
-    "APE/USDT",
-    "API3/USDT",
-    "APT/USDT",
-    "ARB/USDT",
-    "ASTR/USDT",
-    "ATOM/USDT",
-    "AUDIO/USDT",
-    "AXL/USDT",
-    "AXS/USDT",
-    "BAND/USDT",
-    "BAT/USDT",
-    "BCH/USDT",
-    "BICO/USDT",
-    "BLUR/USDT",
-    "BNB/USDT",
-    "BNT/USDT",
-    "BONK/USDT",
-    "BOSON/USDT",
-    "BRETT/USDT",
-    "BTRST/USDT",
-    "CELO/USDT",
-    "CELR/USDT",
-    "CHZ/USDT",
-    "COMP/USDT",
-    "COTI/USDT",
-    "CRV/USDT",
-    "CTSI/USDT",
-    "D/USDT",
-    "DASH/USDT",
-    "DATA/USDT",
-    "DGB/USDT",
-    "DIA/USDT",
-    "EGLD/USDT",
-    "EIGEN/USDT",
-    "ENA/USDT",
-    "ENJ/USDT",
-    "ENS/USDT",
-    "EOS/USDT",
-    "ETC/USDT",
-    "FARTCOIN/USDT",
-    "FET/USDT",
-    "FIL/USDT",
-    "FLOKI/USDT",
-    "FLOW/USDT",
-    "FLUX/USDT",
-    "FORT/USDT",
-    "FORTH/USDT",
-    "G/USDT",
-    "GALA/USDT",
-    "GLM/USDT",
-    "GRT/USDT",
-    "GTC/USDT",
-    "HBAR/USDT",
-    "HYPE/USDT",
-    "ICP/USDT",
-    "ICX/USDT",
-    "ILV/USDT",
-    "IMX/USDT",
-    "IOST/USDT",
-    "IOTA/USDT",
-    "IOTX/USDT",
-    "JAM/USDT",
-    "JTO/USDT",
-    "JUP/USDT",
-    "KAITO/USDT",
-    "KAVA/USDT",
-    "KDA/USDT",
-    "KNC/USDT",
-    "KSM/USDT",
-    "LAYER/USDT",
-    "LAZIO/USDT",
-    "LDO/USDT",
-    "LOOM/USDT",
-    "LPT/USDT",
-    "LRC/USDT",
-    "LSK/USDT",
-    "LTC/USDT",
-    "LTO/USDT",
-    "MAGIC/USDT",
-    "MANA/USDT",
-    "MASK/USDT",
-    "ME/USDT",
-    "METIS/USDT",
-    "MKR/USDT",
-    "MOODENG/USDT",
-    "NEAR/USDT",
-    "NEIRO/USDT",
-    "NEO/USDT",
-    "NMR/USDT",
-    "NOBODY/USDT",
-    "OCEAN/USDT",
-    "OGN/USDT",
-    "ONDO/USDT",
-    "ONE/USDT",
-    "ONG/USDT",
-    "ONT/USDT",
-    "OP/USDT",
-    "ORBS/USDT",
-    "ORCA/USDT",
-    "OXT/USDT",
-    "PAXG/USDT",
-    "PENGU/USDT",
-    "PEPE/USDT",
-    "PNUT/USDT",
-    "POL/USDT",
-    "POLYX/USDT",
-    "POND/USDT",
-    "POPCAT/USDT",
-    "PORTO/USDT",
-    "PROM/USDT",
-    "QNT/USDT",
-    "QTUM/USDT",
-    "RAD/USDT",
-    "RARE/USDT",
-    "REEF/USDT",
-    "RENDER/USDT",
-    "REQ/USDT",
-    "RLC/USDT",
-    "ROSE/USDT",
-    "RVN/USDT",
-    "S/USDT",
-    "SAND/USDT",
-    "SANTOS/USDT",
-    "SHIB/USDT",
-    "SKL/USDT",
-    "SLP/USDT",
-    "SNX/USDT",
-    "SPX/USDT",
-    "STG/USDT",
-    "STMX/USDT",
-    "STORJ/USDT",
-    "SUI/USDT",
-    "SUSHI/USDT",
-    "SYS/USDT",
-    "T/USDT",
-    "TFUEL/USDT",
-    "THETA/USDT",
-    "TLM/USDT",
-    "TOSHI/USDT",
-    "TRAC/USDT",
-    "TRUMP/USDT",
-    "TURBO/USDT",
-    "UNI/USDT",
-    "USELESS/USDT",
-    "VET/USDT",
-    "VIRTUAL/USDT",
-    "VOXEL/USDT",
-    "VTHO/USDT",
-    "WAXP/USDT",
-    "WIF/USDT",
-    "WLD/USDT",
-    "XDC/USDT",
-    "XEC/USDT",
-    "XLM/USDT",
-    "XNO/USDT",
-    "XTZ/USDT",
-    "YFI/USDT",
-    "ZEC/USDT",
-    "ZEN/USDT",
-    "ZIL/USDT",
-    "ZRX/USDT"
-  ],
-  "pair_details": [
-    {
-      "pair": "BTC/USDT",
-      "symbol": "BTCUSDT",
-      "baseAsset": "BTC",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "ETH/USDT",
-      "symbol": "ETHUSDT",
-      "baseAsset": "ETH",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "XRP/USDT",
-      "symbol": "XRPUSDT",
-      "baseAsset": "XRP",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "BCH/USDT",
-      "symbol": "BCHUSDT",
-      "baseAsset": "BCH",
-      "minQty": 0.0,
-      "tickSize": 0.1
-    },
-    {
-      "pair": "LTC/USDT",
-      "symbol": "LTCUSDT",
-      "baseAsset": "LTC",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "BNB/USDT",
-      "symbol": "BNBUSDT",
-      "baseAsset": "BNB",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "ADA/USDT",
-      "symbol": "ADAUSDT",
-      "baseAsset": "ADA",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "BAT/USDT",
-      "symbol": "BATUSDT",
-      "baseAsset": "BAT",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ETC/USDT",
-      "symbol": "ETCUSDT",
-      "baseAsset": "ETC",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "XLM/USDT",
-      "symbol": "XLMUSDT",
-      "baseAsset": "XLM",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ZRX/USDT",
-      "symbol": "ZRXUSDT",
-      "baseAsset": "ZRX",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "DOGE/USDT",
-      "symbol": "DOGEUSDT",
-      "baseAsset": "DOGE",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "ATOM/USDT",
-      "symbol": "ATOMUSDT",
-      "baseAsset": "ATOM",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "NEO/USDT",
-      "symbol": "NEOUSDT",
-      "baseAsset": "NEO",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "VET/USDT",
-      "symbol": "VETUSDT",
-      "baseAsset": "VET",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "QTUM/USDT",
-      "symbol": "QTUMUSDT",
-      "baseAsset": "QTUM",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ONT/USDT",
-      "symbol": "ONTUSDT",
-      "baseAsset": "ONT",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "KNC/USDT",
-      "symbol": "KNCUSDT",
-      "baseAsset": "KNC",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "VTHO/USDT",
-      "symbol": "VTHOUSDT",
-      "baseAsset": "VTHO",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "COMP/USDT",
-      "symbol": "COMPUSDT",
-      "baseAsset": "COMP",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "MKR/USDT",
-      "symbol": "MKRUSDT",
-      "baseAsset": "MKR",
-      "minQty": 0.0,
-      "tickSize": 0.1
-    },
-    {
-      "pair": "ONE/USDT",
-      "symbol": "ONEUSDT",
-      "baseAsset": "ONE",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "BAND/USDT",
-      "symbol": "BANDUSDT",
-      "baseAsset": "BAND",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "STORJ/USDT",
-      "symbol": "STORJUSDT",
-      "baseAsset": "STORJ",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "UNI/USDT",
-      "symbol": "UNIUSDT",
-      "baseAsset": "UNI",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "SOL/USDT",
-      "symbol": "SOLUSDT",
-      "baseAsset": "SOL",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "EGLD/USDT",
-      "symbol": "EGLDUSDT",
-      "baseAsset": "EGLD",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "PAXG/USDT",
-      "symbol": "PAXGUSDT",
-      "baseAsset": "PAXG",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "OXT/USDT",
-      "symbol": "OXTUSDT",
-      "baseAsset": "OXT",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ZEN/USDT",
-      "symbol": "ZENUSDT",
-      "baseAsset": "ZEN",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "FIL/USDT",
-      "symbol": "FILUSDT",
-      "baseAsset": "FIL",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "AAVE/USDT",
-      "symbol": "AAVEUSDT",
-      "baseAsset": "AAVE",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "GRT/USDT",
-      "symbol": "GRTUSDT",
-      "baseAsset": "GRT",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "SHIB/USDT",
-      "symbol": "SHIBUSDT",
-      "baseAsset": "SHIB",
-      "minQty": 0.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "CRV/USDT",
-      "symbol": "CRVUSDT",
-      "baseAsset": "CRV",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "AXS/USDT",
-      "symbol": "AXSUSDT",
-      "baseAsset": "AXS",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "AVAX/USDT",
-      "symbol": "AVAXUSDT",
-      "baseAsset": "AVAX",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "CTSI/USDT",
-      "symbol": "CTSIUSDT",
-      "baseAsset": "CTSI",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "DOT/USDT",
-      "symbol": "DOTUSDT",
-      "baseAsset": "DOT",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "YFI/USDT",
-      "symbol": "YFIUSDT",
-      "baseAsset": "YFI",
-      "minQty": 0.0,
-      "tickSize": 1.0
-    },
-    {
-      "pair": "1INCH/USDT",
-      "symbol": "1INCHUSDT",
-      "baseAsset": "1INCH",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "MANA/USDT",
-      "symbol": "MANAUSDT",
-      "baseAsset": "MANA",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ALGO/USDT",
-      "symbol": "ALGOUSDT",
-      "baseAsset": "ALGO",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "LINK/USDT",
-      "symbol": "LINKUSDT",
-      "baseAsset": "LINK",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "EOS/USDT",
-      "symbol": "EOSUSDT",
-      "baseAsset": "EOS",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ZEC/USDT",
-      "symbol": "ZECUSDT",
-      "baseAsset": "ZEC",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "ENJ/USDT",
-      "symbol": "ENJUSDT",
-      "baseAsset": "ENJ",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "NEAR/USDT",
-      "symbol": "NEARUSDT",
-      "baseAsset": "NEAR",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "SUSHI/USDT",
-      "symbol": "SUSHIUSDT",
-      "baseAsset": "SUSHI",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "LRC/USDT",
-      "symbol": "LRCUSDT",
-      "baseAsset": "LRC",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "LPT/USDT",
-      "symbol": "LPTUSDT",
-      "baseAsset": "LPT",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "NMR/USDT",
-      "symbol": "NMRUSDT",
-      "baseAsset": "NMR",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "SLP/USDT",
-      "symbol": "SLPUSDT",
-      "baseAsset": "SLP",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "CHZ/USDT",
-      "symbol": "CHZUSDT",
-      "baseAsset": "CHZ",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "OGN/USDT",
-      "symbol": "OGNUSDT",
-      "baseAsset": "OGN",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "GALA/USDT",
-      "symbol": "GALAUSDT",
-      "baseAsset": "GALA",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "TLM/USDT",
-      "symbol": "TLMUSDT",
-      "baseAsset": "TLM",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "SNX/USDT",
-      "symbol": "SNXUSDT",
-      "baseAsset": "SNX",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "AUDIO/USDT",
-      "symbol": "AUDIOUSDT",
-      "baseAsset": "AUDIO",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ENS/USDT",
-      "symbol": "ENSUSDT",
-      "baseAsset": "ENS",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "REQ/USDT",
-      "symbol": "REQUSDT",
-      "baseAsset": "REQ",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "APE/USDT",
-      "symbol": "APEUSDT",
-      "baseAsset": "APE",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "FLUX/USDT",
-      "symbol": "FLUXUSDT",
-      "baseAsset": "FLUX",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "COTI/USDT",
-      "symbol": "COTIUSDT",
-      "baseAsset": "COTI",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "VOXEL/USDT",
-      "symbol": "VOXELUSDT",
-      "baseAsset": "VOXEL",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "RLC/USDT",
-      "symbol": "RLCUSDT",
-      "baseAsset": "RLC",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "BICO/USDT",
-      "symbol": "BICOUSDT",
-      "baseAsset": "BICO",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "API3/USDT",
-      "symbol": "API3USDT",
-      "baseAsset": "API3",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "BNT/USDT",
-      "symbol": "BNTUSDT",
-      "baseAsset": "BNT",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "IMX/USDT",
-      "symbol": "IMXUSDT",
-      "baseAsset": "IMX",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "FLOW/USDT",
-      "symbol": "FLOWUSDT",
-      "baseAsset": "FLOW",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "GTC/USDT",
-      "symbol": "GTCUSDT",
-      "baseAsset": "GTC",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "THETA/USDT",
-      "symbol": "THETAUSDT",
-      "baseAsset": "THETA",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "TFUEL/USDT",
-      "symbol": "TFUELUSDT",
-      "baseAsset": "TFUEL",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "OCEAN/USDT",
-      "symbol": "OCEANUSDT",
-      "baseAsset": "OCEAN",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "LAZIO/USDT",
-      "symbol": "LAZIOUSDT",
-      "baseAsset": "LAZIO",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "SANTOS/USDT",
-      "symbol": "SANTOSUSDT",
-      "baseAsset": "SANTOS",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ALPINE/USDT",
-      "symbol": "ALPINEUSDT",
-      "baseAsset": "ALPINE",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "PORTO/USDT",
-      "symbol": "PORTOUSDT",
-      "baseAsset": "PORTO",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "CELR/USDT",
-      "symbol": "CELRUSDT",
-      "baseAsset": "CELR",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "SKL/USDT",
-      "symbol": "SKLUSDT",
-      "baseAsset": "SKL",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "WAXP/USDT",
-      "symbol": "WAXPUSDT",
-      "baseAsset": "WAXP",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "LTO/USDT",
-      "symbol": "LTOUSDT",
-      "baseAsset": "LTO",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "FET/USDT",
-      "symbol": "FETUSDT",
-      "baseAsset": "FET",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ICP/USDT",
-      "symbol": "ICPUSDT",
-      "baseAsset": "ICP",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "T/USDT",
-      "symbol": "TUSDT",
-      "baseAsset": "T",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "OP/USDT",
-      "symbol": "OPUSDT",
-      "baseAsset": "OP",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ROSE/USDT",
-      "symbol": "ROSEUSDT",
-      "baseAsset": "ROSE",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "CELO/USDT",
-      "symbol": "CELOUSDT",
-      "baseAsset": "CELO",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "KDA/USDT",
-      "symbol": "KDAUSDT",
-      "baseAsset": "KDA",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "KSM/USDT",
-      "symbol": "KSMUSDT",
-      "baseAsset": "KSM",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "ACH/USDT",
-      "symbol": "ACHUSDT",
-      "baseAsset": "ACH",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "SYS/USDT",
-      "symbol": "SYSUSDT",
-      "baseAsset": "SYS",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "RAD/USDT",
-      "symbol": "RADUSDT",
-      "baseAsset": "RAD",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ILV/USDT",
-      "symbol": "ILVUSDT",
-      "baseAsset": "ILV",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "LDO/USDT",
-      "symbol": "LDOUSDT",
-      "baseAsset": "LDO",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "RARE/USDT",
-      "symbol": "RAREUSDT",
-      "baseAsset": "RARE",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "LSK/USDT",
-      "symbol": "LSKUSDT",
-      "baseAsset": "LSK",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "DGB/USDT",
-      "symbol": "DGBUSDT",
-      "baseAsset": "DGB",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "REEF/USDT",
-      "symbol": "REEFUSDT",
-      "baseAsset": "REEF",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "ALICE/USDT",
-      "symbol": "ALICEUSDT",
-      "baseAsset": "ALICE",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "FORTH/USDT",
-      "symbol": "FORTHUSDT",
-      "baseAsset": "FORTH",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ASTR/USDT",
-      "symbol": "ASTRUSDT",
-      "baseAsset": "ASTR",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "BTRST/USDT",
-      "symbol": "BTRSTUSDT",
-      "baseAsset": "BTRST",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "SAND/USDT",
-      "symbol": "SANDUSDT",
-      "baseAsset": "SAND",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "GLM/USDT",
-      "symbol": "GLMUSDT",
-      "baseAsset": "GLM",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "QNT/USDT",
-      "symbol": "QNTUSDT",
-      "baseAsset": "QNT",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "STG/USDT",
-      "symbol": "STGUSDT",
-      "baseAsset": "STG",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "AXL/USDT",
-      "symbol": "AXLUSDT",
-      "baseAsset": "AXL",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "KAVA/USDT",
-      "symbol": "KAVAUSDT",
-      "baseAsset": "KAVA",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "APT/USDT",
-      "symbol": "APTUSDT",
-      "baseAsset": "APT",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "MASK/USDT",
-      "symbol": "MASKUSDT",
-      "baseAsset": "MASK",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "BOSON/USDT",
-      "symbol": "BOSONUSDT",
-      "baseAsset": "BOSON",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "POND/USDT",
-      "symbol": "PONDUSDT",
-      "baseAsset": "POND",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "JAM/USDT",
-      "symbol": "JAMUSDT",
-      "baseAsset": "JAM",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "TRAC/USDT",
-      "symbol": "TRACUSDT",
-      "baseAsset": "TRAC",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "PROM/USDT",
-      "symbol": "PROMUSDT",
-      "baseAsset": "PROM",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "DIA/USDT",
-      "symbol": "DIAUSDT",
-      "baseAsset": "DIA",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "LOOM/USDT",
-      "symbol": "LOOMUSDT",
-      "baseAsset": "LOOM",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "STMX/USDT",
-      "symbol": "STMXUSDT",
-      "baseAsset": "STMX",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "POLYX/USDT",
-      "symbol": "POLYXUSDT",
-      "baseAsset": "POLYX",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "IOST/USDT",
-      "symbol": "IOSTUSDT",
-      "baseAsset": "IOST",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "ARB/USDT",
-      "symbol": "ARBUSDT",
-      "baseAsset": "ARB",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "FLOKI/USDT",
-      "symbol": "FLOKIUSDT",
-      "baseAsset": "FLOKI",
-      "minQty": 0.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "XEC/USDT",
-      "symbol": "XECUSDT",
-      "baseAsset": "XEC",
-      "minQty": 0.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "BLUR/USDT",
-      "symbol": "BLURUSDT",
-      "baseAsset": "BLUR",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ANKR/USDT",
-      "symbol": "ANKRUSDT",
-      "baseAsset": "ANKR",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "DASH/USDT",
-      "symbol": "DASHUSDT",
-      "baseAsset": "DASH",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "HBAR/USDT",
-      "symbol": "HBARUSDT",
-      "baseAsset": "HBAR",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "ICX/USDT",
-      "symbol": "ICXUSDT",
-      "baseAsset": "ICX",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "IOTA/USDT",
-      "symbol": "IOTAUSDT",
-      "baseAsset": "IOTA",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "RVN/USDT",
-      "symbol": "RVNUSDT",
-      "baseAsset": "RVN",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "XNO/USDT",
-      "symbol": "XNOUSDT",
-      "baseAsset": "XNO",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "XTZ/USDT",
-      "symbol": "XTZUSDT",
-      "baseAsset": "XTZ",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ZIL/USDT",
-      "symbol": "ZILUSDT",
-      "baseAsset": "ZIL",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "ORBS/USDT",
-      "symbol": "ORBSUSDT",
-      "baseAsset": "ORBS",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "ADX/USDT",
-      "symbol": "ADXUSDT",
-      "baseAsset": "ADX",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "FORT/USDT",
-      "symbol": "FORTUSDT",
-      "baseAsset": "FORT",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "SUI/USDT",
-      "symbol": "SUIUSDT",
-      "baseAsset": "SUI",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ONG/USDT",
-      "symbol": "ONGUSDT",
-      "baseAsset": "ONG",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "G/USDT",
-      "symbol": "GUSDT",
-      "baseAsset": "G",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "RENDER/USDT",
-      "symbol": "RENDERUSDT",
-      "baseAsset": "RENDER",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "BONK/USDT",
-      "symbol": "BONKUSDT",
-      "baseAsset": "BONK",
-      "minQty": 0.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "MAGIC/USDT",
-      "symbol": "MAGICUSDT",
-      "baseAsset": "MAGIC",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "PEPE/USDT",
-      "symbol": "PEPEUSDT",
-      "baseAsset": "PEPE",
-      "minQty": 0.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "WIF/USDT",
-      "symbol": "WIFUSDT",
-      "baseAsset": "WIF",
-      "minQty": 0.0,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "IOTX/USDT",
-      "symbol": "IOTXUSDT",
-      "baseAsset": "IOTX",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "PNUT/USDT",
-      "symbol": "PNUTUSDT",
-      "baseAsset": "PNUT",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "PENGU/USDT",
-      "symbol": "PENGUUSDT",
-      "baseAsset": "PENGU",
-      "minQty": 0.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "POL/USDT",
-      "symbol": "POLUSDT",
-      "baseAsset": "POL",
-      "minQty": 0.0,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "TRUMP/USDT",
-      "symbol": "TRUMPUSDT",
-      "baseAsset": "TRUMP",
-      "minQty": 0.0,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "NEIRO/USDT",
-      "symbol": "NEIROUSDT",
-      "baseAsset": "NEIRO",
-      "minQty": 1.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "EIGEN/USDT",
-      "symbol": "EIGENUSDT",
-      "baseAsset": "EIGEN",
-      "minQty": 0.01,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ME/USDT",
-      "symbol": "MEUSDT",
-      "baseAsset": "ME",
-      "minQty": 0.01,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "D/USDT",
-      "symbol": "DUSDT",
-      "baseAsset": "D",
-      "minQty": 0.0,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "METIS/USDT",
-      "symbol": "METISUSDT",
-      "baseAsset": "METIS",
-      "minQty": 0.001,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "JUP/USDT",
-      "symbol": "JUPUSDT",
-      "baseAsset": "JUP",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "S/USDT",
-      "symbol": "SUSDT",
-      "baseAsset": "S",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "JTO/USDT",
-      "symbol": "JTOUSDT",
-      "baseAsset": "JTO",
-      "minQty": 0.1,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "ORCA/USDT",
-      "symbol": "ORCAUSDT",
-      "baseAsset": "ORCA",
-      "minQty": 0.01,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "DATA/USDT",
-      "symbol": "DATAUSDT",
-      "baseAsset": "DATA",
-      "minQty": 0.1,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "VIRTUAL/USDT",
-      "symbol": "VIRTUALUSDT",
-      "baseAsset": "VIRTUAL",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "AIXBT/USDT",
-      "symbol": "AIXBTUSDT",
-      "baseAsset": "AIXBT",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "KAITO/USDT",
-      "symbol": "KAITOUSDT",
-      "baseAsset": "KAITO",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "TURBO/USDT",
-      "symbol": "TURBOUSDT",
-      "baseAsset": "TURBO",
-      "minQty": 1.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "HYPE/USDT",
-      "symbol": "HYPEUSDT",
-      "baseAsset": "HYPE",
-      "minQty": 0.001,
-      "tickSize": 0.01
-    },
-    {
-      "pair": "ENA/USDT",
-      "symbol": "ENAUSDT",
-      "baseAsset": "ENA",
-      "minQty": 0.01,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "LAYER/USDT",
-      "symbol": "LAYERUSDT",
-      "baseAsset": "LAYER",
-      "minQty": 0.01,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "FARTCOIN/USDT",
-      "symbol": "FARTCOINUSDT",
-      "baseAsset": "FARTCOIN",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "SPX/USDT",
-      "symbol": "SPXUSDT",
-      "baseAsset": "SPX",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "POPCAT/USDT",
-      "symbol": "POPCATUSDT",
-      "baseAsset": "POPCAT",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "MOODENG/USDT",
-      "symbol": "MOODENGUSDT",
-      "baseAsset": "MOODENG",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "ANIME/USDT",
-      "symbol": "ANIMEUSDT",
-      "baseAsset": "ANIME",
-      "minQty": 0.1,
-      "tickSize": 1e-05
-    },
-    {
-      "pair": "1000MOG/USDT",
-      "symbol": "1000MOGUSDT",
-      "baseAsset": "1000MOG",
-      "minQty": 1.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "ONDO/USDT",
-      "symbol": "ONDOUSDT",
-      "baseAsset": "ONDO",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "1000REKT/USDT",
-      "symbol": "1000REKTUSDT",
-      "baseAsset": "1000REKT",
-      "minQty": 1.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "XDC/USDT",
-      "symbol": "XDCUSDT",
-      "baseAsset": "XDC",
-      "minQty": 1.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "BRETT/USDT",
-      "symbol": "BRETTUSDT",
-      "baseAsset": "BRETT",
-      "minQty": 1.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "WLD/USDT",
-      "symbol": "WLDUSDT",
-      "baseAsset": "WLD",
-      "minQty": 0.1,
-      "tickSize": 0.001
-    },
-    {
-      "pair": "TOSHI/USDT",
-      "symbol": "TOSHIUSDT",
-      "baseAsset": "TOSHI",
-      "minQty": 1.0,
-      "tickSize": 1e-08
-    },
-    {
-      "pair": "USELESS/USDT",
-      "symbol": "USELESSUSDT",
-      "baseAsset": "USELESS",
-      "minQty": 0.1,
-      "tickSize": 0.0001
-    },
-    {
-      "pair": "A2Z/USDT",
-      "symbol": "A2ZUSDT",
-      "baseAsset": "A2Z",
-      "minQty": 1.0,
-      "tickSize": 1e-06
-    },
-    {
-      "pair": "NOBODY/USDT",
-      "symbol": "NOBODYUSDT",
-      "baseAsset": "NOBODY",
-      "minQty": 1.0,
-      "tickSize": 1e-06
-    }
-  ],
-  "expansion_potential": "174 additional pairs available"
-}
+[
+  {
+    "symbol": "1000MOGUSDT",
+    "baseAsset": "1000MOG",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "1000REKTUSDT",
+    "baseAsset": "1000REKT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "1INCHUSDT",
+    "baseAsset": "1INCH",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "A2ZUSDT",
+    "baseAsset": "A2Z",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "AAVEUSDT",
+    "baseAsset": "AAVE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ACHUSDT",
+    "baseAsset": "ACH",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ADAUSDT",
+    "baseAsset": "ADA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ADXUSDT",
+    "baseAsset": "ADX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "AIXBTUSDT",
+    "baseAsset": "AIXBT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ALGOUSDT",
+    "baseAsset": "ALGO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ALICEUSDT",
+    "baseAsset": "ALICE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ALPINEUSDT",
+    "baseAsset": "ALPINE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ANIMEUSDT",
+    "baseAsset": "ANIME",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ANKRUSDT",
+    "baseAsset": "ANKR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "APEUSDT",
+    "baseAsset": "APE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "API3USDT",
+    "baseAsset": "API3",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "APTUSDT",
+    "baseAsset": "APT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ARBUSDT",
+    "baseAsset": "ARB",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ASTRUSDT",
+    "baseAsset": "ASTR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ATOMUSDT",
+    "baseAsset": "ATOM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "AUDIOUSDT",
+    "baseAsset": "AUDIO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "AVAXUSDT",
+    "baseAsset": "AVAX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "AXLUSDT",
+    "baseAsset": "AXL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "AXSUSDT",
+    "baseAsset": "AXS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BANDUSDT",
+    "baseAsset": "BAND",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BATUSDT",
+    "baseAsset": "BAT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BCHUSDT",
+    "baseAsset": "BCH",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BICOUSDT",
+    "baseAsset": "BICO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BLURUSDT",
+    "baseAsset": "BLUR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BNBUSDT",
+    "baseAsset": "BNB",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BNTUSDT",
+    "baseAsset": "BNT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BONKUSDT",
+    "baseAsset": "BONK",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BOSONUSDT",
+    "baseAsset": "BOSON",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BRETTUSDT",
+    "baseAsset": "BRETT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BTCUSDT",
+    "baseAsset": "BTC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "BTRSTUSDT",
+    "baseAsset": "BTRST",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "CELOUSDT",
+    "baseAsset": "CELO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "CELRUSDT",
+    "baseAsset": "CELR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "CHZUSDT",
+    "baseAsset": "CHZ",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "COMPUSDT",
+    "baseAsset": "COMP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "COTIUSDT",
+    "baseAsset": "COTI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "CRVUSDT",
+    "baseAsset": "CRV",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "CTSIUSDT",
+    "baseAsset": "CTSI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DUSDT",
+    "baseAsset": "D",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DASHUSDT",
+    "baseAsset": "DASH",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DATAUSDT",
+    "baseAsset": "DATA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DGBUSDT",
+    "baseAsset": "DGB",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DIAUSDT",
+    "baseAsset": "DIA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DOGEUSDT",
+    "baseAsset": "DOGE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "DOTUSDT",
+    "baseAsset": "DOT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "EGLDUSDT",
+    "baseAsset": "EGLD",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "EIGENUSDT",
+    "baseAsset": "EIGEN",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ENAUSDT",
+    "baseAsset": "ENA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ENJUSDT",
+    "baseAsset": "ENJ",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ENSUSDT",
+    "baseAsset": "ENS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "EOSUSDT",
+    "baseAsset": "EOS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ETCUSDT",
+    "baseAsset": "ETC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "baseAsset": "ETH",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FARTCOINUSDT",
+    "baseAsset": "FARTCOIN",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FETUSDT",
+    "baseAsset": "FET",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FILUSDT",
+    "baseAsset": "FIL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FLOKIUSDT",
+    "baseAsset": "FLOKI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FLOWUSDT",
+    "baseAsset": "FLOW",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FLUXUSDT",
+    "baseAsset": "FLUX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FORTUSDT",
+    "baseAsset": "FORT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "FORTHUSDT",
+    "baseAsset": "FORTH",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "GUSDT",
+    "baseAsset": "G",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "GALAUSDT",
+    "baseAsset": "GALA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "GLMUSDT",
+    "baseAsset": "GLM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "GRTUSDT",
+    "baseAsset": "GRT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "GTCUSDT",
+    "baseAsset": "GTC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "HBARUSDT",
+    "baseAsset": "HBAR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "HYPEUSDT",
+    "baseAsset": "HYPE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ICPUSDT",
+    "baseAsset": "ICP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ICXUSDT",
+    "baseAsset": "ICX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ILVUSDT",
+    "baseAsset": "ILV",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "IMXUSDT",
+    "baseAsset": "IMX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "IOSTUSDT",
+    "baseAsset": "IOST",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "IOTAUSDT",
+    "baseAsset": "IOTA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "IOTXUSDT",
+    "baseAsset": "IOTX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "JAMUSDT",
+    "baseAsset": "JAM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "JTOUSDT",
+    "baseAsset": "JTO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "JUPUSDT",
+    "baseAsset": "JUP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "KAITOUSDT",
+    "baseAsset": "KAITO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "KAVAUSDT",
+    "baseAsset": "KAVA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "KDAUSDT",
+    "baseAsset": "KDA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "KNCUSDT",
+    "baseAsset": "KNC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "KSMUSDT",
+    "baseAsset": "KSM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LAYERUSDT",
+    "baseAsset": "LAYER",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LAZIOUSDT",
+    "baseAsset": "LAZIO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LDOUSDT",
+    "baseAsset": "LDO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LINKUSDT",
+    "baseAsset": "LINK",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LOOMUSDT",
+    "baseAsset": "LOOM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LPTUSDT",
+    "baseAsset": "LPT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LRCUSDT",
+    "baseAsset": "LRC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LSKUSDT",
+    "baseAsset": "LSK",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LTCUSDT",
+    "baseAsset": "LTC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "LTOUSDT",
+    "baseAsset": "LTO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "MAGICUSDT",
+    "baseAsset": "MAGIC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "MANAUSDT",
+    "baseAsset": "MANA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "MASKUSDT",
+    "baseAsset": "MASK",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "MEUSDT",
+    "baseAsset": "ME",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "METISUSDT",
+    "baseAsset": "METIS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "MKRUSDT",
+    "baseAsset": "MKR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "MOODENGUSDT",
+    "baseAsset": "MOODENG",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "NEARUSDT",
+    "baseAsset": "NEAR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "NEIROUSDT",
+    "baseAsset": "NEIRO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "NEOUSDT",
+    "baseAsset": "NEO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "NMRUSDT",
+    "baseAsset": "NMR",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "NOBODYUSDT",
+    "baseAsset": "NOBODY",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "OCEANUSDT",
+    "baseAsset": "OCEAN",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "OGNUSDT",
+    "baseAsset": "OGN",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ONDOUSDT",
+    "baseAsset": "ONDO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ONEUSDT",
+    "baseAsset": "ONE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ONGUSDT",
+    "baseAsset": "ONG",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ONTUSDT",
+    "baseAsset": "ONT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "OPUSDT",
+    "baseAsset": "OP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ORBSUSDT",
+    "baseAsset": "ORBS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ORCAUSDT",
+    "baseAsset": "ORCA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "OXTUSDT",
+    "baseAsset": "OXT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PAXGUSDT",
+    "baseAsset": "PAXG",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PENGUUSDT",
+    "baseAsset": "PENGU",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PEPEUSDT",
+    "baseAsset": "PEPE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PNUTUSDT",
+    "baseAsset": "PNUT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "POLUSDT",
+    "baseAsset": "POL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "POLYXUSDT",
+    "baseAsset": "POLYX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PONDUSDT",
+    "baseAsset": "POND",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "POPCATUSDT",
+    "baseAsset": "POPCAT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PORTOUSDT",
+    "baseAsset": "PORTO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "PROMUSDT",
+    "baseAsset": "PROM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "QNTUSDT",
+    "baseAsset": "QNT",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "QTUMUSDT",
+    "baseAsset": "QTUM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "RADUSDT",
+    "baseAsset": "RAD",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "RAREUSDT",
+    "baseAsset": "RARE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "REEFUSDT",
+    "baseAsset": "REEF",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "RENDERUSDT",
+    "baseAsset": "RENDER",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "REQUSDT",
+    "baseAsset": "REQ",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "RLCUSDT",
+    "baseAsset": "RLC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ROSEUSDT",
+    "baseAsset": "ROSE",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "RVNUSDT",
+    "baseAsset": "RVN",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SUSDT",
+    "baseAsset": "S",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SANDUSDT",
+    "baseAsset": "SAND",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SANTOSUSDT",
+    "baseAsset": "SANTOS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SHIBUSDT",
+    "baseAsset": "SHIB",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SKLUSDT",
+    "baseAsset": "SKL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SLPUSDT",
+    "baseAsset": "SLP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SNXUSDT",
+    "baseAsset": "SNX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SOLUSDT",
+    "baseAsset": "SOL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SPXUSDT",
+    "baseAsset": "SPX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "STGUSDT",
+    "baseAsset": "STG",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "STMXUSDT",
+    "baseAsset": "STMX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "STORJUSDT",
+    "baseAsset": "STORJ",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SUIUSDT",
+    "baseAsset": "SUI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SUSHIUSDT",
+    "baseAsset": "SUSHI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "SYSUSDT",
+    "baseAsset": "SYS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TUSDT",
+    "baseAsset": "T",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TFUELUSDT",
+    "baseAsset": "TFUEL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "THETAUSDT",
+    "baseAsset": "THETA",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TLMUSDT",
+    "baseAsset": "TLM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TOSHIUSDT",
+    "baseAsset": "TOSHI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TRACUSDT",
+    "baseAsset": "TRAC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TRUMPUSDT",
+    "baseAsset": "TRUMP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "TURBOUSDT",
+    "baseAsset": "TURBO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "UNIUSDT",
+    "baseAsset": "UNI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "USELESSUSDT",
+    "baseAsset": "USELESS",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "VETUSDT",
+    "baseAsset": "VET",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "VIRTUALUSDT",
+    "baseAsset": "VIRTUAL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "VOXELUSDT",
+    "baseAsset": "VOXEL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "VTHOUSDT",
+    "baseAsset": "VTHO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "WAXPUSDT",
+    "baseAsset": "WAXP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "WIFUSDT",
+    "baseAsset": "WIF",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "WLDUSDT",
+    "baseAsset": "WLD",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "XDCUSDT",
+    "baseAsset": "XDC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "XECUSDT",
+    "baseAsset": "XEC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "XLMUSDT",
+    "baseAsset": "XLM",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "XNOUSDT",
+    "baseAsset": "XNO",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "XRPUSDT",
+    "baseAsset": "XRP",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "XTZUSDT",
+    "baseAsset": "XTZ",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "YFIUSDT",
+    "baseAsset": "YFI",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ZECUSDT",
+    "baseAsset": "ZEC",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ZENUSDT",
+    "baseAsset": "ZEN",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ZILUSDT",
+    "baseAsset": "ZIL",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  },
+  {
+    "symbol": "ZRXUSDT",
+    "baseAsset": "ZRX",
+    "quoteAsset": "USDT",
+    "status": "TRADING"
+  }
+]
