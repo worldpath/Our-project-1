@@ -7,9 +7,24 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import HTMLResponse
 from jose import jwt, JWTError
 from pydantic import BaseModel
-from metrics_report import summary_metrics, equity_curve
-from health_monitor import health_check_endpoint
-from tax_tracker import TaxTracker
+try:
+    from metrics_report import summary_metrics, equity_curve
+except ImportError:
+    def summary_metrics(file): return {"error": "metrics_report module not found"}
+    def equity_curve(file): return []
+
+try:
+    from health_monitor import health_check_endpoint
+except ImportError:
+    def health_check_endpoint(): return {"error": "health_monitor module not found"}
+
+try:
+    from tax_tracker import TaxTracker
+except ImportError:
+    class TaxTracker:
+        def get_portfolio_summary(self): return {"error": "tax_tracker module not found"}
+        def generate_1099_b_data(self, year): return {"error": "tax_tracker module not found"}
+        def close(self): pass
 
 SECRET = os.getenv("DASHBOARD_JWT_SECRET","change_me")
 ALGO="HS256"; TTL=int(os.getenv("DASHBOARD_TOKEN_TTL_MIN","720"))

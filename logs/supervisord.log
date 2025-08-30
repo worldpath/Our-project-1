@@ -1,0 +1,60 @@
+2025-08-30 04:46:31,121 INFO RPC interface 'supervisor' initialized
+2025-08-30 04:46:31,121 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2025-08-30 04:46:31,134 INFO daemonizing the supervisord process
+2025-08-30 04:46:31,135 INFO supervisord started with pid 3702
+2025-08-30 04:46:32,140 INFO spawned: 'crypto-trading-bot' with pid 3720
+2025-08-30 04:46:32,143 INFO spawned: 'crypto-dashboard' with pid 3721
+2025-08-30 04:46:33,340 INFO success: crypto-trading-bot entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:33,340 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:34,132 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:34,136 INFO spawned: 'crypto-dashboard' with pid 3729
+2025-08-30 04:46:35,192 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:35,290 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:36,294 INFO spawned: 'crypto-dashboard' with pid 3734
+2025-08-30 04:46:37,290 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:38,294 INFO spawned: 'crypto-dashboard' with pid 3740
+2025-08-30 04:46:39,296 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:39,757 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:40,761 INFO spawned: 'crypto-dashboard' with pid 3744
+2025-08-30 04:46:41,957 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:42,959 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:43,963 INFO spawned: 'crypto-dashboard' with pid 3769
+2025-08-30 04:46:45,087 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:45,087 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:46,091 INFO spawned: 'crypto-dashboard' with pid 3828
+2025-08-30 04:46:47,155 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:47,155 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:48,160 INFO spawned: 'crypto-dashboard' with pid 3876
+2025-08-30 04:46:49,142 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:50,146 INFO spawned: 'crypto-dashboard' with pid 3883
+2025-08-30 04:46:52,117 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:52,118 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:53,121 INFO spawned: 'crypto-dashboard' with pid 3937
+2025-08-30 04:46:54,134 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:54,134 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:55,137 INFO spawned: 'crypto-dashboard' with pid 3945
+2025-08-30 04:46:56,129 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:57,132 INFO spawned: 'crypto-dashboard' with pid 4020
+2025-08-30 04:46:58,194 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:46:59,196 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:46:59,883 INFO spawned: 'crypto-dashboard' with pid 4077
+2025-08-30 04:46:59,919 INFO waiting for crypto-dashboard to stop
+2025-08-30 04:46:59,920 WARN stopped: crypto-dashboard (terminated by SIGTERM)
+2025-08-30 04:46:59,925 INFO spawned: 'crypto-dashboard' with pid 4078
+2025-08-30 04:47:00,993 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:47:00,993 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:47:00,996 INFO spawned: 'crypto-dashboard' with pid 4087
+2025-08-30 04:47:01,997 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:47:01,998 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:47:03,002 INFO spawned: 'crypto-dashboard' with pid 4099
+2025-08-30 04:47:03,973 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:47:05,117 INFO spawned: 'crypto-dashboard' with pid 4105
+2025-08-30 04:47:06,084 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:47:08,090 INFO spawned: 'crypto-dashboard' with pid 4109
+2025-08-30 04:47:09,008 WARN exited: crypto-dashboard (exit status 1; not expected)
+2025-08-30 04:47:12,015 INFO spawned: 'crypto-dashboard' with pid 4131
+2025-08-30 04:47:13,018 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-08-30 04:47:14,781 INFO waiting for crypto-dashboard to stop
+2025-08-30 04:47:14,946 WARN stopped: crypto-dashboard (terminated by SIGTERM)
+2025-08-30 04:47:14,952 INFO spawned: 'crypto-dashboard' with pid 4211
+2025-08-30 04:47:16,885 INFO success: crypto-dashboard entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
