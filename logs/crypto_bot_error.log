@@ -266,3 +266,9 @@ INFO:     Uvicorn running on http://0.0.0.0:8889 (Press CTRL+C to quit)
   uptime = datetime.utcnow() - self.start_time
 /home/user/webapp/main.py:857: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   "timestamp": datetime.utcnow().isoformat(),
+2025-08-30 07:10:27,324 - __main__ - INFO - ⚡ Starting trading cycle - analyzing markets...
+2025-08-30 07:10:27,325 - __main__ - INFO - 📊 Trading cycle complete | Active positions: 0
+2025-08-30 07:10:27,325 - __main__ - INFO - 💰 Portfolio value: $3,804.32 | Total P&L: $0.00
+2025-08-30 07:25:27,325 - __main__ - INFO - ⚡ Starting trading cycle - analyzing markets...
+2025-08-30 07:25:27,326 - __main__ - INFO - 📊 Trading cycle complete | Active positions: 0
+2025-08-30 07:25:27,326 - __main__ - INFO - 💰 Portfolio value: $3,804.32 | Total P&L: $0.00
