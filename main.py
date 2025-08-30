@@ -67,12 +67,12 @@ class TradingConfig:
     environment: str = "production"
     trading_mode: str = "aggressive"
     
-    # Aggressive trading settings
-    portfolio_risk: float = 30.0  # 30% portfolio risk
-    max_position_size: float = 15.0  # 15% max position size
-    concurrent_positions: int = 8  # 8 positions at once
+    # MAXIMUM AGGRESSIVE SETTINGS - Read from environment
+    portfolio_risk: float = float(os.getenv('PORTFOLIO_RISK', '80.0'))  # 80% portfolio risk for 1000x gains
+    max_position_size: float = float(os.getenv('MAX_POSITION_SIZE', '50.0'))  # 50% max position size
+    concurrent_positions: int = int(os.getenv('MAX_CONCURRENT_POSITIONS', '8'))  # 8 positions at once
     trading_timeframe: str = "15m"  # 15-minute cycles
-    risk_per_trade: float = 5.0  # 5% risk per trade
+    risk_per_trade: float = float(os.getenv('RISK_PER_TRADE', '15.0'))  # 15% risk per trade
     
     # Trading pairs
     trading_pairs: List[str] = None
@@ -91,10 +91,31 @@ class TradingConfig:
     
     def __post_init__(self):
         if self.trading_pairs is None:
-            self.trading_pairs = [
-                "BTC/USDT", "ETH/USDT", "ADA/USDT", "SOL/USDT", "MATIC/USDT",
-                "XRP/USDT", "DOGE/USDT", "AVAX/USDT", "DOT/USDT", "LINK/USDT"
-            ]
+            # EXPANDED CONFIGURATION: All 183 available Binance.US crypto/USDT pairs
+            # Categorized by risk/volume for strategic trading
+            
+            # Tier 1: Major cryptocurrencies (15 pairs) - Highest priority
+            tier1_major = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT', 'SOL/USDT', 'AVAX/USDT', 'DOT/USDT', 'LINK/USDT', 'LTC/USDT', 'BCH/USDT', 'ATOM/USDT', 'NEAR/USDT', 'UNI/USDT', 'ALGO/USDT']
+            
+            # Tier 2: Established altcoins (29 pairs) - Medium priority  
+            tier2_established = ['DOGE/USDT', 'SHIB/USDT', 'CRV/USDT', 'AAVE/USDT', 'COMP/USDT', 'MKR/USDT', 'SNX/USDT', '1INCH/USDT', 'SUSHI/USDT', 'FIL/USDT', 'VET/USDT', 'ICP/USDT', 'THETA/USDT', 'EOS/USDT', 'XTZ/USDT', 'ZEC/USDT', 'DASH/USDT', 'ETC/USDT', 'NEO/USDT', 'QTUM/USDT', 'ZRX/USDT', 'BAT/USDT', 'ENJ/USDT', 'MANA/USDT', 'SAND/USDT', 'AXS/USDT', 'APE/USDT', 'GALA/USDT', 'CHZ/USDT']
+            
+            # Tier 3: Additional opportunities (133 pairs) - Lower priority
+            tier3_others = ['A2Z/USDT', 'ACH/USDT', 'ADX/USDT', 'AIXBT/USDT', 'ALICE/USDT', 'ALPINE/USDT', 'ANIME/USDT', 'ANKR/USDT', 'API3/USDT', 'APT/USDT', 'ARB/USDT', 'ASTR/USDT', 'AUDIO/USDT', 'AXL/USDT', 'BAND/USDT', 'BICO/USDT', 'BLUR/USDT', 'BNT/USDT', 'BONK/USDT', 'BOSON/USDT', 'BRETT/USDT', 'BTRST/USDT', 'CELO/USDT', 'CELR/USDT', 'COTI/USDT', 'CTSI/USDT', 'D/USDT', 'DATA/USDT', 'DGB/USDT', 'DIA/USDT', 'EGLD/USDT', 'EIGEN/USDT', 'ENA/USDT', 'ENS/USDT', 'FET/USDT', 'FLOKI/USDT', 'FLOW/USDT', 'FLUX/USDT', 'FORT/USDT', 'FORTH/USDT', 'G/USDT', 'GLM/USDT', 'GRT/USDT', 'GTC/USDT', 'HBAR/USDT', 'HYPE/USDT', 'ICX/USDT', 'ILV/USDT', 'IMX/USDT', 'IOST/USDT', 'IOTA/USDT', 'IOTX/USDT', 'JAM/USDT', 'JTO/USDT', 'JUP/USDT', 'KAITO/USDT', 'KAVA/USDT', 'KDA/USDT', 'KNC/USDT', 'KSM/USDT', 'LAYER/USDT', 'LAZIO/USDT', 'LDO/USDT', 'LOOM/USDT', 'LPT/USDT', 'LRC/USDT', 'LSK/USDT', 'LTO/USDT', 'MAGIC/USDT', 'MASK/USDT', 'ME/USDT', 'METIS/USDT', 'MOODENG/USDT', 'NEIRO/USDT', 'NMR/USDT', 'OCEAN/USDT', 'OGN/USDT', 'ONDO/USDT', 'ONE/USDT', 'ONG/USDT', 'ONT/USDT', 'OP/USDT', 'ORBS/USDT', 'ORCA/USDT', 'OXT/USDT', 'PAXG/USDT', 'PENGU/USDT', 'PEPE/USDT', 'PNUT/USDT', 'POL/USDT', 'POLYX/USDT', 'POND/USDT', 'POPCAT/USDT', 'PORTO/USDT', 'PROM/USDT', 'QNT/USDT', 'RAD/USDT', 'RARE/USDT', 'REEF/USDT', 'RENDER/USDT', 'REQ/USDT', 'RLC/USDT', 'ROSE/USDT', 'RVN/USDT', 'S/USDT', 'SANTOS/USDT', 'SKL/USDT', 'SLP/USDT', 'SPX/USDT', 'STG/USDT', 'STMX/USDT', 'STORJ/USDT', 'SUI/USDT', 'SYS/USDT', 'T/USDT', 'TFUEL/USDT', 'TLM/USDT', 'TRAC/USDT', 'TRUMP/USDT', 'TURBO/USDT', 'VIRTUAL/USDT', 'VOXEL/USDT', 'VTHO/USDT', 'WAXP/USDT', 'WIF/USDT', 'WLD/USDT', 'XDC/USDT', 'XEC/USDT', 'XLM/USDT', 'XNO/USDT', 'YFI/USDT', 'ZEN/USDT', 'ZIL/USDT']
+            
+            # Tier 3: High-risk/Meme coins (6 pairs) - Aggressive only
+            tier3_meme = ['1000MOG/USDT', '1000REKT/USDT', 'FARTCOIN/USDT', 'NOBODY/USDT', 'TOSHI/USDT', 'USELESS/USDT']
+            
+            # Combine all tiers for maximum trading opportunities
+            if self.trading_mode == "conservative":
+                self.trading_pairs = tier1_major[:10]  # Conservative: Top 10 major pairs
+            elif self.trading_mode == "moderate":
+                self.trading_pairs = tier1_major + tier2_established[:15]  # Moderate: Major + some established
+            else:  # aggressive mode - USE ALL PAIRS FOR 1000x POTENTIAL
+                self.trading_pairs = tier1_major + tier2_established + tier3_others + tier3_meme
+            
+            print(f"🚀 {self.trading_mode.upper()} MODE: Trading {len(self.trading_pairs)} pairs out of 183 available")
+            print(f"📈 EXPANSION: From 10 pairs to {len(self.trading_pairs)} pairs ({(len(self.trading_pairs)/10)*100:.0f}% increase in opportunities)")
 
 @dataclass
 class TradingSignal:
@@ -707,7 +728,61 @@ class AggressiveTradingBot:
         
         # Trading state
         self.positions: List[Position] = []
-        self.portfolio_value = float(os.getenv('INITIAL_CAPITAL', '10000'))
+        # Initialize portfolio value - try to get real balance first
+        try:
+            # Attempt to get real account balance
+            import asyncio
+            real_balances = asyncio.run(self.binance.get_account_balance())
+            
+            # Calculate TOTAL portfolio value including ALL crypto holdings
+            total_usd = 0
+            
+            # Get current prices for crypto valuation
+            for asset, balance_info in real_balances.items():
+                asset_total = balance_info['total']
+                
+                if asset in ['USD', 'USDT', 'USDC', 'BUSD']:
+                    # Direct USD value
+                    asset_usd_value = asset_total
+                else:
+                    # Get crypto asset USD value
+                    try:
+                        # Try to get price in USDT first
+                        ticker = self.binance.client.get_symbol_ticker(symbol=f"{asset}USDT")
+                        price = float(ticker['price'])
+                        asset_usd_value = asset_total * price
+                        print(f"💰 {asset}: {asset_total:.8f} × ${price:.2f} = ${asset_usd_value:.2f}")
+                    except:
+                        try:
+                            # Try to get price in USD if USDT fails
+                            ticker = self.binance.client.get_symbol_ticker(symbol=f"{asset}USD")
+                            price = float(ticker['price'])
+                            asset_usd_value = asset_total * price
+                            print(f"💰 {asset}: {asset_total:.8f} × ${price:.2f} = ${asset_usd_value:.2f}")
+                        except:
+                            # Skip if can't get price
+                            asset_usd_value = 0
+                            print(f"⚠️ {asset}: Cannot get price, skipping ${asset_total:.8f}")
+                
+                total_usd += asset_usd_value
+            
+            if total_usd > 0:
+                self.portfolio_value = total_usd
+                print(f"✅ TOTAL PORTFOLIO VALUE (USD + Crypto): ${total_usd:,.2f}")
+                print(f"🎯 Position Size (50%): ${total_usd * 0.5:,.2f}")
+                print(f"⚡ Max Exposure (80%): ${total_usd * 0.8:,.2f}")
+            else:
+                # Fallback to environment variable or default
+                self.portfolio_value = float(os.getenv('REAL_PORTFOLIO_VALUE', os.getenv('INITIAL_CAPITAL', '10000')))
+                print(f"⚠️ No USD balance found, using configured value: ${self.portfolio_value:,.2f}")
+                
+        except Exception as e:
+            # Fallback for IP whitelist or other API issues
+            self.portfolio_value = float(os.getenv('REAL_PORTFOLIO_VALUE', os.getenv('INITIAL_CAPITAL', '10000')))
+            print(f"⚠️ Cannot access Binance API (IP whitelist?): {str(e)}")
+            print(f"📊 Using configured portfolio value: ${self.portfolio_value:,.2f}")
+            if "35.197.15.230" in str(e) or "IP" in str(e).upper():
+                print(f"💡 TIP: Add IP 35.197.15.230 to your Binance.US API whitelist for live data")
         self.trading_active = False
         self.start_time = datetime.utcnow()
         self.last_report_time = datetime.utcnow()
@@ -747,23 +822,23 @@ class AggressiveTradingBot:
             with open(config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
             
-            # Extract aggressive settings
-            aggressive = config_data.get('aggressive_settings', {})
-            risk_mgmt = config_data.get('risk_management', {})
+            # Extract settings from correct config sections
+            portfolio = config_data.get('portfolio', {})
+            risk = config_data.get('risk', {})
             features = config_data.get('features', {})
             
             return TradingConfig(
                 environment=config_data.get('environment', 'production'),
                 trading_mode=config_data.get('trading_mode', 'aggressive'),
-                portfolio_risk=aggressive.get('portfolio_risk', 30.0),
-                max_position_size=aggressive.get('max_position_size', 15.0),
-                concurrent_positions=aggressive.get('concurrent_positions', 8),
-                trading_timeframe=aggressive.get('trading_timeframe', '15m'),
-                risk_per_trade=aggressive.get('risk_per_trade', 5.0),
+                portfolio_risk=portfolio.get('max_portfolio_heat', 80.0),
+                max_position_size=portfolio.get('max_position_size', 50.0),
+                concurrent_positions=portfolio.get('concurrent_positions', 8),
+                trading_timeframe='15m',
+                risk_per_trade=risk.get('risk_per_trade', 15.0),
                 trading_pairs=config_data.get('trading_pairs', []),
-                max_daily_loss=risk_mgmt.get('max_daily_loss', 12.0),
-                max_drawdown=risk_mgmt.get('max_drawdown', 35.0),
-                emergency_stop=risk_mgmt.get('emergency_stop', 40.0),
+                max_daily_loss=portfolio.get('max_daily_loss', 25.0),
+                max_drawdown=portfolio.get('max_drawdown', 60.0),
+                emergency_stop=60.0,
                 live_trading=features.get('live_trading', True),
                 automated_trading=features.get('automated_trading', True),
                 risk_management=features.get('risk_management', True),

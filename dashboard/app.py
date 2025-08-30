@@ -7,6 +7,10 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import HTMLResponse
 from jose import jwt, JWTError
 from pydantic import BaseModel
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 try:
     from metrics_report import summary_metrics, equity_curve
 except ImportError:
@@ -40,6 +44,14 @@ def require_auth(token: HTTPAuthorizationCredentials = Depends(bearer)):
 
 class LoginForm(BaseModel): username: str; password: str
 
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    """Serve the dashboard HTML interface"""
+    html_file = Path(__file__).parent / "index.html"
+    if html_file.exists():
+        return HTMLResponse(html_file.read_text())
+    return HTMLResponse("<h1>Dashboard HTML not found</h1>")
+
 @app.post("/api/login")
 async def login(f: LoginForm): 
     if f.username!=USER or f.password!=PASS: raise HTTPException(status_code=401, detail="Bad credentials")
@@ -47,11 +59,30 @@ async def login(f: LoginForm):
 
 @app.get("/api/status")
 async def status(user: str=Depends(require_auth)):
+    import aiohttp
+    
+    # Get local state
     p=Path("risk_state.json"); state={}
     if p.exists():
         try: state=json.loads(p.read_text())
         except Exception: state={}
-    return {"user":user, "time":datetime.now(timezone.utc).isoformat(), "state":state}
+    
+    # Get bot status from trading bot API
+    bot_status = {}
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get("http://localhost:8889/status") as resp:
+                if resp.status == 200:
+                    bot_status = await resp.json()
+    except Exception as e:
+        bot_status = {"error": f"Could not connect to trading bot: {str(e)}"}
+    
+    return {
+        "user": user, 
+        "time": datetime.now(timezone.utc).isoformat(), 
+        "state": state,
+        "bot_status": bot_status
+    }
 
 @app.get("/api/positions")
 async def positions(user: str=Depends(require_auth)):

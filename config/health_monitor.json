@@ -1,0 +1,36 @@
+{
+  "health_checks": {
+    "bot_api": {
+      "url": "http://localhost:8889/status",
+      "timeout": 10,
+      "expected_keys": [
+        "trading_mode",
+        "portfolio_value",
+        "live_trading"
+      ]
+    },
+    "dashboard": {
+      "url": "http://localhost:8001/healthz",
+      "timeout": 5
+    }
+  },
+  "alerts": {
+    "enabled": true,
+    "email_enabled": true,
+    "telegram_enabled": true,
+    "alert_conditions": [
+      "bot_offline",
+      "dashboard_offline",
+      "trading_stopped",
+      "api_errors",
+      "low_balance",
+      "high_losses"
+    ]
+  },
+  "thresholds": {
+    "max_downtime_minutes": 5,
+    "max_api_errors_per_hour": 10,
+    "min_balance_usd": 50,
+    "max_daily_loss_percent": 25
+  }
+}
