@@ -67,20 +67,20 @@ class TradingConfig:
     environment: str = "production"
     trading_mode: str = "aggressive"
     
-    # MAXIMUM AGGRESSIVE SETTINGS - Read from environment
-    portfolio_risk: float = float(os.getenv('PORTFOLIO_RISK', '80.0'))  # 80% portfolio risk for 1000x gains
-    max_position_size: float = float(os.getenv('MAX_POSITION_SIZE', '50.0'))  # 50% max position size
-    concurrent_positions: int = int(os.getenv('MAX_CONCURRENT_POSITIONS', '8'))  # 8 positions at once
-    trading_timeframe: str = "15m"  # 15-minute cycles
-    risk_per_trade: float = float(os.getenv('RISK_PER_TRADE', '15.0'))  # 15% risk per trade
+    # ULTRA AGGRESSIVE SETTINGS - Maximum possible risk for maximum gains
+    portfolio_risk: float = float(os.getenv('PORTFOLIO_RISK', '95.0'))  # 95% portfolio risk for maximum gains
+    max_position_size: float = float(os.getenv('MAX_POSITION_SIZE', '75.0'))  # 75% max position size
+    concurrent_positions: int = int(os.getenv('MAX_CONCURRENT_POSITIONS', '15'))  # 15 positions at once
+    trading_timeframe: str = "5m"  # 5-minute cycles for ultra-fast trading
+    risk_per_trade: float = float(os.getenv('RISK_PER_TRADE', '25.0'))  # 25% risk per trade
     
     # Trading pairs
     trading_pairs: List[str] = None
     
-    # Risk management
-    max_daily_loss: float = 12.0  # 12% daily loss limit
-    max_drawdown: float = 35.0  # 35% max drawdown
-    emergency_stop: float = 40.0  # 40% emergency stop
+    # Ultra-aggressive risk management
+    max_daily_loss: float = 25.0  # 25% daily loss limit (more aggressive)
+    max_drawdown: float = 60.0  # 60% max drawdown
+    emergency_stop: float = 70.0  # 70% emergency stop
     
     # Features
     live_trading: bool = True
@@ -91,31 +91,76 @@ class TradingConfig:
     
     def __post_init__(self):
         if self.trading_pairs is None:
-            # EXPANDED CONFIGURATION: All 183 available Binance.US crypto/USDT pairs
-            # Categorized by risk/volume for strategic trading
+            # DYNAMIC LOADING: Load ALL available Binance.US pairs from JSON data
+            self.trading_pairs = self._load_all_trading_pairs()
             
-            # Tier 1: Major cryptocurrencies (15 pairs) - Highest priority
-            tier1_major = ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT', 'SOL/USDT', 'AVAX/USDT', 'DOT/USDT', 'LINK/USDT', 'LTC/USDT', 'BCH/USDT', 'ATOM/USDT', 'NEAR/USDT', 'UNI/USDT', 'ALGO/USDT']
+            print(f"🚀 ULTRA-AGGRESSIVE MODE: Trading ALL {len(self.trading_pairs)} pairs available on Binance.US")
+            print(f"📈 MAXIMUM OPPORTUNITY: Using 100% of available trading pairs for maximum gains")
+            print(f"⚡ ULTRA SETTINGS: {self.portfolio_risk}% portfolio risk, {self.max_position_size}% max position")
+    
+    def _load_all_trading_pairs(self) -> List[str]:
+        """Dynamically load all available trading pairs from Binance.US data"""
+        try:
+            # Load from the all_binance_usdt_pairs.json file
+            import json
+            with open('all_binance_usdt_pairs.json', 'r') as f:
+                pairs_data = json.load(f)
             
-            # Tier 2: Established altcoins (29 pairs) - Medium priority  
-            tier2_established = ['DOGE/USDT', 'SHIB/USDT', 'CRV/USDT', 'AAVE/USDT', 'COMP/USDT', 'MKR/USDT', 'SNX/USDT', '1INCH/USDT', 'SUSHI/USDT', 'FIL/USDT', 'VET/USDT', 'ICP/USDT', 'THETA/USDT', 'EOS/USDT', 'XTZ/USDT', 'ZEC/USDT', 'DASH/USDT', 'ETC/USDT', 'NEO/USDT', 'QTUM/USDT', 'ZRX/USDT', 'BAT/USDT', 'ENJ/USDT', 'MANA/USDT', 'SAND/USDT', 'AXS/USDT', 'APE/USDT', 'GALA/USDT', 'CHZ/USDT']
+            # Convert to trading format (BTCUSDT -> BTC/USDT)
+            trading_pairs = []
+            for pair_info in pairs_data:
+                if pair_info.get('status') == 'TRADING' and pair_info.get('quoteAsset') == 'USDT':
+                    base_asset = pair_info.get('baseAsset')
+                    trading_pairs.append(f"{base_asset}/USDT")
             
-            # Tier 3: Additional opportunities (133 pairs) - Lower priority
-            tier3_others = ['A2Z/USDT', 'ACH/USDT', 'ADX/USDT', 'AIXBT/USDT', 'ALICE/USDT', 'ALPINE/USDT', 'ANIME/USDT', 'ANKR/USDT', 'API3/USDT', 'APT/USDT', 'ARB/USDT', 'ASTR/USDT', 'AUDIO/USDT', 'AXL/USDT', 'BAND/USDT', 'BICO/USDT', 'BLUR/USDT', 'BNT/USDT', 'BONK/USDT', 'BOSON/USDT', 'BRETT/USDT', 'BTRST/USDT', 'CELO/USDT', 'CELR/USDT', 'COTI/USDT', 'CTSI/USDT', 'D/USDT', 'DATA/USDT', 'DGB/USDT', 'DIA/USDT', 'EGLD/USDT', 'EIGEN/USDT', 'ENA/USDT', 'ENS/USDT', 'FET/USDT', 'FLOKI/USDT', 'FLOW/USDT', 'FLUX/USDT', 'FORT/USDT', 'FORTH/USDT', 'G/USDT', 'GLM/USDT', 'GRT/USDT', 'GTC/USDT', 'HBAR/USDT', 'HYPE/USDT', 'ICX/USDT', 'ILV/USDT', 'IMX/USDT', 'IOST/USDT', 'IOTA/USDT', 'IOTX/USDT', 'JAM/USDT', 'JTO/USDT', 'JUP/USDT', 'KAITO/USDT', 'KAVA/USDT', 'KDA/USDT', 'KNC/USDT', 'KSM/USDT', 'LAYER/USDT', 'LAZIO/USDT', 'LDO/USDT', 'LOOM/USDT', 'LPT/USDT', 'LRC/USDT', 'LSK/USDT', 'LTO/USDT', 'MAGIC/USDT', 'MASK/USDT', 'ME/USDT', 'METIS/USDT', 'MOODENG/USDT', 'NEIRO/USDT', 'NMR/USDT', 'OCEAN/USDT', 'OGN/USDT', 'ONDO/USDT', 'ONE/USDT', 'ONG/USDT', 'ONT/USDT', 'OP/USDT', 'ORBS/USDT', 'ORCA/USDT', 'OXT/USDT', 'PAXG/USDT', 'PENGU/USDT', 'PEPE/USDT', 'PNUT/USDT', 'POL/USDT', 'POLYX/USDT', 'POND/USDT', 'POPCAT/USDT', 'PORTO/USDT', 'PROM/USDT', 'QNT/USDT', 'RAD/USDT', 'RARE/USDT', 'REEF/USDT', 'RENDER/USDT', 'REQ/USDT', 'RLC/USDT', 'ROSE/USDT', 'RVN/USDT', 'S/USDT', 'SANTOS/USDT', 'SKL/USDT', 'SLP/USDT', 'SPX/USDT', 'STG/USDT', 'STMX/USDT', 'STORJ/USDT', 'SUI/USDT', 'SYS/USDT', 'T/USDT', 'TFUEL/USDT', 'TLM/USDT', 'TRAC/USDT', 'TRUMP/USDT', 'TURBO/USDT', 'VIRTUAL/USDT', 'VOXEL/USDT', 'VTHO/USDT', 'WAXP/USDT', 'WIF/USDT', 'WLD/USDT', 'XDC/USDT', 'XEC/USDT', 'XLM/USDT', 'XNO/USDT', 'YFI/USDT', 'ZEN/USDT', 'ZIL/USDT']
+            print(f"✅ Dynamically loaded {len(trading_pairs)} USDT trading pairs")
+            return sorted(trading_pairs)  # Sort for consistent ordering
             
-            # Tier 3: High-risk/Meme coins (6 pairs) - Aggressive only
-            tier3_meme = ['1000MOG/USDT', '1000REKT/USDT', 'FARTCOIN/USDT', 'NOBODY/USDT', 'TOSHI/USDT', 'USELESS/USDT']
-            
-            # Combine all tiers for maximum trading opportunities
-            if self.trading_mode == "conservative":
-                self.trading_pairs = tier1_major[:10]  # Conservative: Top 10 major pairs
-            elif self.trading_mode == "moderate":
-                self.trading_pairs = tier1_major + tier2_established[:15]  # Moderate: Major + some established
-            else:  # aggressive mode - USE ALL PAIRS FOR 1000x POTENTIAL
-                self.trading_pairs = tier1_major + tier2_established + tier3_others + tier3_meme
-            
-            print(f"🚀 {self.trading_mode.upper()} MODE: Trading {len(self.trading_pairs)} pairs out of 183 available")
-            print(f"📈 EXPANSION: From 10 pairs to {len(self.trading_pairs)} pairs ({(len(self.trading_pairs)/10)*100:.0f}% increase in opportunities)")
+        except Exception as e:
+            print(f"⚠️ Error loading dynamic pairs: {e}")
+            # Fallback to comprehensive hardcoded list
+            all_pairs = [
+                # Major cryptocurrencies (Tier 1)
+                'BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'XRP/USDT', 'ADA/USDT', 'SOL/USDT', 
+                'AVAX/USDT', 'DOT/USDT', 'LINK/USDT', 'LTC/USDT', 'BCH/USDT', 'ATOM/USDT', 
+                'NEAR/USDT', 'UNI/USDT', 'ALGO/USDT',
+                
+                # Established altcoins (Tier 2)
+                'DOGE/USDT', 'SHIB/USDT', 'CRV/USDT', 'AAVE/USDT', 'COMP/USDT', 'MKR/USDT', 
+                'SNX/USDT', '1INCH/USDT', 'SUSHI/USDT', 'FIL/USDT', 'VET/USDT', 'ICP/USDT', 
+                'THETA/USDT', 'EOS/USDT', 'XTZ/USDT', 'ZEC/USDT', 'DASH/USDT', 'ETC/USDT', 
+                'NEO/USDT', 'QTUM/USDT', 'ZRX/USDT', 'BAT/USDT', 'ENJ/USDT', 'MANA/USDT', 
+                'SAND/USDT', 'AXS/USDT', 'APE/USDT', 'GALA/USDT', 'CHZ/USDT',
+                
+                # All other opportunities (Tier 3)
+                'A2Z/USDT', 'ACH/USDT', 'ADX/USDT', 'AIXBT/USDT', 'ALICE/USDT', 'ALPINE/USDT', 
+                'ANIME/USDT', 'ANKR/USDT', 'API3/USDT', 'APT/USDT', 'ARB/USDT', 'ASTR/USDT', 
+                'AUDIO/USDT', 'AXL/USDT', 'BAND/USDT', 'BICO/USDT', 'BLUR/USDT', 'BNT/USDT', 
+                'BONK/USDT', 'BOSON/USDT', 'BRETT/USDT', 'BTRST/USDT', 'CELO/USDT', 'CELR/USDT', 
+                'COTI/USDT', 'CTSI/USDT', 'D/USDT', 'DATA/USDT', 'DGB/USDT', 'DIA/USDT', 
+                'EGLD/USDT', 'EIGEN/USDT', 'ENA/USDT', 'ENS/USDT', 'FET/USDT', 'FLOKI/USDT', 
+                'FLOW/USDT', 'FLUX/USDT', 'FORT/USDT', 'FORTH/USDT', 'G/USDT', 'GLM/USDT', 
+                'GRT/USDT', 'GTC/USDT', 'HBAR/USDT', 'HYPE/USDT', 'ICX/USDT', 'ILV/USDT', 
+                'IMX/USDT', 'IOST/USDT', 'IOTA/USDT', 'IOTX/USDT', 'JAM/USDT', 'JTO/USDT', 
+                'JUP/USDT', 'KAITO/USDT', 'KAVA/USDT', 'KDA/USDT', 'KNC/USDT', 'KSM/USDT', 
+                'LAYER/USDT', 'LAZIO/USDT', 'LDO/USDT', 'LOOM/USDT', 'LPT/USDT', 'LRC/USDT', 
+                'LSK/USDT', 'LTO/USDT', 'MAGIC/USDT', 'MASK/USDT', 'ME/USDT', 'METIS/USDT', 
+                'MOODENG/USDT', 'NEIRO/USDT', 'NMR/USDT', 'OCEAN/USDT', 'OGN/USDT', 'ONDO/USDT', 
+                'ONE/USDT', 'ONG/USDT', 'ONT/USDT', 'OP/USDT', 'ORBS/USDT', 'ORCA/USDT', 
+                'OXT/USDT', 'PAXG/USDT', 'PENGU/USDT', 'PEPE/USDT', 'PNUT/USDT', 'POL/USDT', 
+                'POLYX/USDT', 'POND/USDT', 'POPCAT/USDT', 'PORTO/USDT', 'PROM/USDT', 'QNT/USDT', 
+                'RAD/USDT', 'RARE/USDT', 'REEF/USDT', 'RENDER/USDT', 'REQ/USDT', 'RLC/USDT', 
+                'ROSE/USDT', 'RVN/USDT', 'S/USDT', 'SANTOS/USDT', 'SKL/USDT', 'SLP/USDT', 
+                'SPX/USDT', 'STG/USDT', 'STMX/USDT', 'STORJ/USDT', 'SUI/USDT', 'SYS/USDT', 
+                'T/USDT', 'TFUEL/USDT', 'TLM/USDT', 'TRAC/USDT', 'TRUMP/USDT', 'TURBO/USDT', 
+                'VIRTUAL/USDT', 'VOXEL/USDT', 'VTHO/USDT', 'WAXP/USDT', 'WIF/USDT', 'WLD/USDT', 
+                'XDC/USDT', 'XEC/USDT', 'XLM/USDT', 'XNO/USDT', 'YFI/USDT', 'ZEN/USDT', 'ZIL/USDT',
+                
+                # High-risk/Meme coins
+                '1000MOG/USDT', '1000REKT/USDT', 'FARTCOIN/USDT', 'NOBODY/USDT', 'TOSHI/USDT', 'USELESS/USDT'
+            ]
+            print(f"📊 Using fallback list: {len(all_pairs)} pairs")
+            return all_pairs
 
 @dataclass
 class TradingSignal:
@@ -286,7 +331,7 @@ class MomentumStrategy(TradingStrategy):
                 entry_price=close,
                 stop_loss=stop_loss,
                 take_profit=take_profit,
-                position_size=min(confidence * 15.0, 15.0),  # Max 15% position size
+                position_size=min(confidence * 25.0, 25.0),  # Max 25% position size (more aggressive)
                 risk_reward_ratio=(take_profit - close) / (close - stop_loss),
                 timestamp=datetime.utcnow(),
                 metadata={
@@ -313,7 +358,7 @@ class MomentumStrategy(TradingStrategy):
                 entry_price=close,
                 stop_loss=stop_loss,
                 take_profit=take_profit,
-                position_size=min(confidence * 15.0, 15.0),
+                position_size=min(confidence * 25.0, 25.0),  # Max 25% position size (more aggressive)
                 risk_reward_ratio=(close - take_profit) / (stop_loss - close),
                 timestamp=datetime.utcnow(),
                 metadata={
@@ -382,7 +427,7 @@ class MeanReversionStrategy(TradingStrategy):
                 entry_price=close,
                 stop_loss=stop_loss,
                 take_profit=take_profit,
-                position_size=min(confidence * 12.0, 12.0),  # Slightly smaller for mean reversion
+                position_size=min(confidence * 20.0, 20.0),  # Max 20% for mean reversion (more aggressive)
                 risk_reward_ratio=(take_profit - close) / (close - stop_loss),
                 timestamp=datetime.utcnow(),
                 metadata={
@@ -408,7 +453,7 @@ class MeanReversionStrategy(TradingStrategy):
                 entry_price=close,
                 stop_loss=stop_loss,
                 take_profit=take_profit,
-                position_size=min(confidence * 12.0, 12.0),
+                position_size=min(confidence * 20.0, 20.0),  # Max 20% for mean reversion (more aggressive)
                 risk_reward_ratio=(close - take_profit) / (stop_loss - close),
                 timestamp=datetime.utcnow(),
                 metadata={
@@ -485,7 +530,7 @@ class BreakoutStrategy(TradingStrategy):
                 entry_price=close,
                 stop_loss=stop_loss,
                 take_profit=take_profit,
-                position_size=min(confidence * 15.0, 15.0),
+                position_size=min(confidence * 25.0, 25.0),  # Max 25% for breakout (more aggressive)
                 risk_reward_ratio=(take_profit - close) / (close - stop_loss),
                 timestamp=datetime.utcnow(),
                 metadata={
@@ -516,7 +561,7 @@ class BreakoutStrategy(TradingStrategy):
                 entry_price=close,
                 stop_loss=stop_loss,
                 take_profit=take_profit,
-                position_size=min(confidence * 15.0, 15.0),
+                position_size=min(confidence * 25.0, 25.0),  # Max 25% for breakout (more aggressive)
                 risk_reward_ratio=(close - take_profit) / (stop_loss - close),
                 timestamp=datetime.utcnow(),
                 metadata={
@@ -580,18 +625,18 @@ class RiskManager:
             risk_checks["approved"] = False
             risk_checks["reasons"].append(f"Maximum concurrent positions reached: {len(positions)}")
         
-        # Check consecutive losses
-        if self.consecutive_losses >= 5:
+        # Check consecutive losses (more aggressive threshold)
+        if self.consecutive_losses >= 8:
             risk_checks["approved"] = False
             risk_checks["reasons"].append(f"Too many consecutive losses: {self.consecutive_losses}")
         
-        # Check signal quality
-        if signal.confidence < 0.6:
+        # Check signal quality (lower threshold for more trades)
+        if signal.confidence < 0.4:
             risk_checks["approved"] = False
             risk_checks["reasons"].append(f"Signal confidence too low: {signal.confidence:.2f}")
         
-        # Check risk-reward ratio
-        if signal.risk_reward_ratio < 1.5:
+        # Check risk-reward ratio (more aggressive threshold)
+        if signal.risk_reward_ratio < 1.2:
             risk_checks["approved"] = False
             risk_checks["reasons"].append(f"Risk-reward ratio too low: {signal.risk_reward_ratio:.2f}")
         
@@ -938,7 +983,7 @@ class AggressiveTradingBot:
         
         for symbol in self.config.trading_pairs:
             try:
-                # Get market data
+                # Get market data (5-minute timeframe for ultra-fast trading)
                 data = await self.binance.get_market_data(symbol, self.config.trading_timeframe)
                 if data.empty:
                     continue
@@ -1145,8 +1190,8 @@ Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
                 self.logger.info(f"📊 Trading cycle complete | Active positions: {len(self.positions)}")
                 self.logger.info(f"💰 Portfolio value: ${self.portfolio_value:,.2f} | Total P&L: ${self.total_pnl:,.2f}")
                 
-                # Wait for next cycle (15 minutes for aggressive trading)
-                await asyncio.sleep(900)  # 15 minutes
+                # Wait for next cycle (5 minutes for ultra-aggressive trading)
+                await asyncio.sleep(300)  # 5 minutes for maximum opportunity capture
                 
             except Exception as e:
                 self.logger.error(f"❌ Trading cycle error: {str(e)}")

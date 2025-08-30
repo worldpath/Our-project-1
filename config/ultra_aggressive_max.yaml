@@ -1,0 +1,130 @@
+# ULTRA-AGGRESSIVE MAXIMUM RISK CONFIGURATION
+# ==========================================
+# ⚠️  EXTREME SETTINGS FOR MAXIMUM GAINS AND MAXIMUM RISK!
+
+environment: "production"
+trading_mode: "ultra_aggressive"
+
+# PORTFOLIO RISK SETTINGS - MAXIMUM POSSIBLE
+portfolio:
+  max_portfolio_heat: 95.0              # 95% of capital at risk
+  max_position_size: 75.0               # 75% max single position
+  concurrent_positions: 15              # 15 simultaneous positions
+  max_daily_loss: 25.0                  # 25% daily loss threshold
+  max_drawdown: 60.0                    # 60% max drawdown
+  emergency_stop: 70.0                  # 70% emergency stop
+  rebalancing: true                     # Dynamic rebalancing
+  auto_compound: true                   # Compound all profits
+  target_allocation: "ultra_dynamic"    # Ultra-dynamic allocation
+
+# RISK MANAGEMENT - AGGRESSIVE THRESHOLDS  
+risk:
+  risk_per_trade: 25.0                  # 25% risk per trade
+  min_confidence: 0.4                   # Lower confidence threshold
+  min_risk_reward: 1.2                  # Lower risk/reward required
+  max_consecutive_losses: 8             # Allow more consecutive losses
+  correlation_limit: 0.9                # Higher correlation allowed
+  volatility_threshold: 0.3             # Lower volatility requirement
+
+# TRADING PAIRS - ALL AVAILABLE BINANCE.US PAIRS
+trading_pairs: 
+  # This will be dynamically loaded from all_binance_usdt_pairs.json
+  # Includes all 183+ available USDT pairs for maximum opportunity
+  mode: "all_available"                 # Use ALL pairs available
+  
+# TIMING CONFIGURATION - ULTRA-FAST CYCLES
+timing:
+  timeframe: "5m"                       # 5-minute ultra-fast cycles
+  analysis_interval: 300                # 5-minute analysis cycles
+  signal_threshold: 0.4                 # Lower signal threshold
+  execution_delay: 1                    # 1-second execution delay
+  
+# STRATEGY CONFIGURATION - AGGRESSIVE PARAMETERS
+strategies:
+  momentum:
+    enabled: true
+    rsi_oversold: 25                    # More aggressive RSI levels
+    rsi_overbought: 75
+    macd_threshold: 0.001               # Lower MACD threshold
+    volume_multiplier: 1.1              # Lower volume requirement
+    
+  mean_reversion:
+    enabled: true
+    bb_threshold: 0.95                  # Tighter Bollinger Bands
+    rsi_extreme: 20                     # More extreme RSI levels
+    stoch_threshold: 15                 # Lower stochastic threshold
+    
+  breakout:
+    enabled: true
+    breakout_threshold: 0.995           # Tighter breakout detection
+    volume_spike: 1.3                   # Lower volume spike requirement
+    atr_multiplier: 1.1                 # Lower ATR requirement
+
+# POSITION SIZING - ULTRA-AGGRESSIVE
+position_sizing:
+  base_size: 25.0                       # 25% base position size
+  confidence_multiplier: 1.5            # Higher confidence scaling
+  volatility_adjustment: 0.8            # Less volatility reduction
+  max_individual: 75.0                  # 75% max individual position
+
+# FEATURES - FULL AUTOMATION
+features:
+  live_trading: true                    # Live trading enabled
+  automated_trading: true               # Full automation
+  24_7_operation: true                  # Continuous operation
+  daily_reports: true                   # Daily performance reports
+  email_notifications: true             # Email alerts
+  telegram_notifications: false        # Telegram alerts (optional)
+  risk_management: true                 # Risk management enabled
+  auto_rebalancing: true                # Automatic rebalancing
+  
+# MONITORING AND ALERTS - COMPREHENSIVE
+monitoring:
+  health_checks: true                   # System health monitoring
+  performance_tracking: true            # Performance metrics
+  risk_monitoring: true                 # Risk level monitoring
+  alert_thresholds:
+    portfolio_loss: 15.0                # Alert at 15% loss
+    position_loss: 10.0                 # Alert at 10% position loss
+    consecutive_losses: 5               # Alert after 5 losses
+    
+# ADVANCED SETTINGS - MAXIMUM PERFORMANCE
+advanced:
+  parallel_analysis: true               # Parallel market analysis
+  ml_enhanced: false                    # Machine learning (if available)
+  smart_money_tracking: true            # Smart money flow tracking
+  order_flow_analysis: true             # Order flow analysis
+  liquidity_detection: true             # Liquidity zone detection
+  
+# BACKUP AND RECOVERY - DATA PROTECTION
+backup:
+  auto_backup: true                     # Automatic backups
+  backup_interval: 3600                 # Hourly backups
+  max_backups: 48                       # Keep 48 hours of backups
+  
+# LOGGING - COMPREHENSIVE TRACKING  
+logging:
+  level: "INFO"                         # Information level logging
+  trade_logging: true                   # Log all trades
+  strategy_logging: true                # Log strategy decisions
+  performance_logging: true             # Log performance metrics
+  
+# ⚠️  ULTRA-AGGRESSIVE MODE DISCLAIMERS:
+# =====================================
+# 1. EXTREME RISK: Uses 95% of portfolio with 75% single positions
+# 2. HIGH FREQUENCY: 5-minute cycles with aggressive thresholds  
+# 3. MAXIMUM EXPOSURE: Up to 15 concurrent positions
+# 4. AGGRESSIVE SIZING: 25% base position sizes with high leverage
+# 5. REDUCED SAFETY: Lower confidence and risk/reward requirements
+#
+# 🎯 DESIGNED FOR:
+# - Maximum profit potential (1000x+ possible)
+# - High-risk tolerance traders only
+# - Portfolios that can afford total loss
+# - Experienced cryptocurrency traders
+#
+# 💰 EXPECTED OUTCOMES:
+# - Extreme volatility in returns
+# - Potential for massive gains OR losses  
+# - High-frequency trading activity
+# - Maximum market opportunity capture
