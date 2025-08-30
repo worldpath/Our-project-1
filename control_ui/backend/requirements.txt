@@ -1,0 +1,35 @@
+# Control Plane UI Requirements
+# =============================
+# Based on ChatGPT-5 Pro recommendations
+
+# Web framework
+fastapi>=0.100.0
+uvicorn>=0.20.0
+
+# Templates and static files
+jinja2>=3.1.0
+
+# Data validation
+pydantic>=2.0.0
+
+# WebSocket support
+websockets>=11.0
+
+# Async operations
+aiohttp>=3.8.0
+
+# PostgreSQL support (recommended by ChatGPT-5 Pro)
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+
+# Date handling
+python-dateutil>=2.9.0
+
+# Logging
+loguru>=0.7.0
+
+# Configuration
+python-dotenv>=1.0.0
+
+# Monitoring (Prometheus integration)
+prometheus-client>=0.17.0
