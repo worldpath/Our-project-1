@@ -1,15 +1,45 @@
 
 [Unit]
-Description=Crypto Bot Live Trader
-After=network.target
+Description=Crypto Bot Live Trading System
+After=network.target network-online.target
+Wants=network-online.target
+
 [Service]
 Type=simple
 User=ubuntu
 WorkingDirectory=/opt/crypto-bot
 Environment="PYTHONPATH=/opt/crypto-bot"
 EnvironmentFile=/opt/crypto-bot/.env
+
+# Pre-start validation
+ExecStartPre=/opt/crypto-bot/.venv/bin/python startup_system.py --health-check
 ExecStart=/opt/crypto-bot/.venv/bin/python run_live.py
+
+# Restart configuration
 Restart=always
-RestartSec=5
+RestartSec=10
+StartLimitInterval=300
+StartLimitBurst=5
+
+# Resource limits
+MemoryMax=2G
+CPUQuota=200%
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=read-only
+ProtectSystem=strict
+ReadWritePaths=/opt/crypto-bot
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=crypto-bot
+
+# Timeout settings
+TimeoutStartSec=60
+TimeoutStopSec=30
+
 [Install]
 WantedBy=multi-user.target

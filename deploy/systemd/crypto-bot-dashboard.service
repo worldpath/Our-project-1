@@ -1,15 +1,43 @@
 
 [Unit]
-Description=Crypto Bot Dashboard (FastAPI)
-After=network.target
+Description=Crypto Bot Dashboard and API Service
+After=network.target crypto-bot.service
+Wants=crypto-bot.service
+
 [Service]
 Type=simple
 User=ubuntu
 WorkingDirectory=/opt/crypto-bot
 Environment="PYTHONPATH=/opt/crypto-bot"
 EnvironmentFile=/opt/crypto-bot/.env
+
 ExecStart=/opt/crypto-bot/.venv/bin/python dashboard/run_dashboard.py
+
+# Restart configuration
 Restart=always
 RestartSec=5
+StartLimitInterval=300
+StartLimitBurst=3
+
+# Resource limits
+MemoryMax=1G
+CPUQuota=100%
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=read-only
+ProtectSystem=strict
+ReadWritePaths=/opt/crypto-bot
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=crypto-bot-dashboard
+
+# Timeout settings
+TimeoutStartSec=30
+TimeoutStopSec=15
+
 [Install]
 WantedBy=multi-user.target

@@ -8,6 +8,8 @@ from fastapi.responses import HTMLResponse
 from jose import jwt, JWTError
 from pydantic import BaseModel
 from metrics_report import summary_metrics, equity_curve
+from health_monitor import health_check_endpoint
+from tax_tracker import TaxTracker
 
 SECRET = os.getenv("DASHBOARD_JWT_SECRET","change_me")
 ALGO="HS256"; TTL=int(os.getenv("DASHBOARD_TOKEN_TTL_MIN","720"))
@@ -62,13 +64,35 @@ async def healthz():
     return {"ok": True, "ts": datetime.now(timezone.utc).isoformat()}
 
 @app.get("/api/trades")
-
 async def trades(user: str=Depends(require_auth)):
     fp=Path("trade_history.csv")
     if not fp.exists(): return []
     rows=fp.read_text().splitlines()
     head=rows[0].split(","); data=[dict(zip(head,r.split(","))) for r in rows[1:]]
     return data[-200:]
+
+@app.get("/api/health")
+async def health(user: str=Depends(require_auth)):
+    try: return health_check_endpoint()
+    except Exception as e: return {"error": str(e)}
+
+@app.get("/api/tax/summary")
+async def tax_summary(user: str=Depends(require_auth)):
+    try: 
+        tracker = TaxTracker()
+        summary = tracker.get_portfolio_summary()
+        tracker.close()
+        return summary
+    except Exception as e: return {"error": str(e)}
+
+@app.get("/api/tax/1099b/{year}")
+async def tax_1099b(year: int, user: str=Depends(require_auth)):
+    try:
+        tracker = TaxTracker()
+        data = tracker.generate_1099_b_data(year)
+        tracker.close()
+        return data
+    except Exception as e: return {"error": str(e)}
 
 INDEX = """
 <!doctype html><html><head><meta charset="UTF-8"><title>Bot Dashboard</title>
@@ -82,11 +106,13 @@ INDEX = """
   <button onclick="login()">Login</button> <span id="msg" style="color:red"></span>
 </div>
 <div id="content" style="display:none;">
-  <div class="card"><b>Equity</b><canvas id="eq" height="120"></canvas></div>
-  <div class="card"><b>Metrics</b><pre id="metrics"></pre></div>
-  <div class="card"><b>Status</b><pre id="status"></pre></div>
-  <div class="card"><b>Positions</b><pre id="positions"></pre></div>
-  <div class="card"><b>Trades</b><pre id="trades"></pre></div>
+  <div class="card"><b>System Health</b><pre id="health"></pre></div>
+  <div class="card"><b>Equity Curve</b><canvas id="eq" height="120"></canvas></div>
+  <div class="card"><b>Trading Metrics</b><pre id="metrics"></pre></div>
+  <div class="card"><b>Bot Status</b><pre id="status"></pre></div>
+  <div class="card"><b>Open Positions</b><pre id="positions"></pre></div>
+  <div class="card"><b>Tax Summary</b><pre id="taxSummary"></pre></div>
+  <div class="card"><b>Recent Trades</b><pre id="trades"></pre></div>
 </div>
 <script>
 let token=null;
@@ -98,11 +124,16 @@ async function login(){
 }
 async function poll(){
   async function g(u){return (await fetch(u,{headers:{'Authorization':'Bearer '+token}})).json()}
-  const s=await g('/api/status'); const p=await g('/api/positions'); const m=await g('/api/metrics'); const eq=await g('/api/equity'); const t=await g('/api/trades');
+  const s=await g('/api/status'); const p=await g('/api/positions'); const m=await g('/api/metrics'); 
+  const eq=await g('/api/equity'); const t=await g('/api/trades'); const h=await g('/api/health');
+  const tax=await g('/api/tax/summary');
+  
   document.getElementById('status').innerText=JSON.stringify(s,null,2);
   document.getElementById('positions').innerText=JSON.stringify(p,null,2);
   document.getElementById('metrics').innerText=JSON.stringify(m,null,2);
-  document.getElementById('trades').innerText=JSON.stringify(t,null,2);
+  document.getElementById('trades').innerText=JSON.stringify(t.slice(-10),null,2);
+  document.getElementById('health').innerText=JSON.stringify(h,null,2);
+  document.getElementById('taxSummary').innerText=JSON.stringify(tax,null,2);
   try{
     const ctx=document.getElementById('eq').getContext('2d');
     const labels=eq.map(x=>x.t); const data=eq.map(x=>x.equity);

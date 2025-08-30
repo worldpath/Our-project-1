@@ -1,0 +1,160 @@
+{
+  "timestamp": "2025-08-30T01:21:32.105570",
+  "server_ip": "207.246.99.108",
+  "checks": {
+    "network_connectivity": {
+      "status": "error",
+      "error": "[Errno 2] No such file or directory: 'ping'"
+    },
+    "http_services": {
+      "port_80": {
+        "status": "unreachable",
+        "ports_tried": [
+          80
+        ]
+      },
+      "port_443": {
+        "status": "unreachable",
+        "ports_tried": [
+          443
+        ]
+      },
+      "port_8000": {
+        "status": "unreachable",
+        "ports_tried": [
+          8000
+        ]
+      },
+      "port_8080": {
+        "status": "unreachable",
+        "ports_tried": [
+          8080
+        ]
+      },
+      "port_3000": {
+        "status": "unreachable",
+        "ports_tried": [
+          3000
+        ]
+      },
+      "port_5000": {
+        "status": "unreachable",
+        "ports_tried": [
+          5000
+        ]
+      }
+    },
+    "bot_health": {
+      "http://207.246.99.108": {
+        "status": "no_working_endpoints",
+        "endpoints": {
+          "/healthz": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=80): Max retries exceeded with url: /healthz (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c45d60>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/status": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=80): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c46660>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/health": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=80): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412de37a0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/positions": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=80): Max retries exceeded with url: /api/positions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c1e990>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/metrics": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=80): Max retries exceeded with url: /api/metrics (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c46a20>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          }
+        }
+      },
+      "http://207.246.99.108:8000": {
+        "status": "no_working_endpoints",
+        "endpoints": {
+          "/healthz": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8000): Max retries exceeded with url: /healthz (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c45e80>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/status": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8000): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c449b0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/health": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8000): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c470b0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/positions": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8000): Max retries exceeded with url: /api/positions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c1e5a0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/metrics": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8000): Max retries exceeded with url: /api/metrics (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c1f260>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          }
+        }
+      },
+      "http://207.246.99.108:8080": {
+        "status": "no_working_endpoints",
+        "endpoints": {
+          "/healthz": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8080): Max retries exceeded with url: /healthz (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c46ff0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/status": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8080): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c448c0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/health": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8080): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c45ee0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/positions": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8080): Max retries exceeded with url: /api/positions (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c46960>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/metrics": {
+            "error": "HTTPConnectionPool(host='207.246.99.108', port=8080): Max retries exceeded with url: /api/metrics (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fe412c1f110>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          }
+        }
+      },
+      "https://207.246.99.108": {
+        "status": "no_working_endpoints",
+        "endpoints": {
+          "/healthz": {
+            "error": "HTTPSConnectionPool(host='207.246.99.108', port=443): Max retries exceeded with url: /healthz (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe412c1e3f0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/status": {
+            "error": "HTTPSConnectionPool(host='207.246.99.108', port=443): Max retries exceeded with url: /api/status (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe412c46960>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/health": {
+            "error": "HTTPSConnectionPool(host='207.246.99.108', port=443): Max retries exceeded with url: /api/health (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe412c445c0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/positions": {
+            "error": "HTTPSConnectionPool(host='207.246.99.108', port=443): Max retries exceeded with url: /api/positions (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe412c45d90>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          },
+          "/api/metrics": {
+            "error": "HTTPSConnectionPool(host='207.246.99.108', port=443): Max retries exceeded with url: /api/metrics (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe412c44ef0>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+            "accessible": false
+          }
+        }
+      }
+    },
+    "system_services": {
+      "status": "skipped",
+      "reason": "No SSH access"
+    },
+    "ssl_certificates": {
+      "https_accessible": false,
+      "connection_error": "HTTPSConnectionPool(host='207.246.99.108', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fe412c1d2b0>: Failed to establish a new connection: [Errno 111] Connection refused'))"
+    }
+  },
+  "overall_status": "critical",
+  "alerts": []
+}
