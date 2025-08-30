@@ -27,10 +27,9 @@ risk:
   volatility_threshold: 0.3             # Lower volatility requirement
 
 # TRADING PAIRS - ALL AVAILABLE BINANCE.US PAIRS
-trading_pairs: 
-  # This will be dynamically loaded from all_binance_usdt_pairs.json
-  # Includes all 183+ available USDT pairs for maximum opportunity
-  mode: "all_available"                 # Use ALL pairs available
+# Dynamic loading from all_binance_usdt_pairs.json
+# Includes all 183+ available USDT pairs for maximum opportunity
+# Leave trading_pairs undefined to use dynamic loading from TradingConfig.__post_init__
   
 # TIMING CONFIGURATION - ULTRA-FAST CYCLES
 timing:
