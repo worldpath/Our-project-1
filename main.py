@@ -584,8 +584,8 @@ class BinanceConnector:
         self.api_secret = api_secret
         self.testnet = testnet
         
-        # Initialize Binance client
-        self.client = BinanceClient(api_key, api_secret, testnet=testnet)
+        # Initialize Binance client for Binance.US
+        self.client = BinanceClient(api_key, api_secret, tld='us', testnet=testnet)
         
         # Initialize CCXT for additional functionality
         self.exchange = ccxt.binanceus({
