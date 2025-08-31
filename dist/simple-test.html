@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CloudFlare Test Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="font-family: Arial; text-align: center; padding: 50px; background: #1a1a1a; color: white;">
+    <h1 style="color: #00ff88;">🎉 CloudFlare Pages Working!</h1>
+    <p>If you can see this page, your CloudFlare deployment is successful.</p>
+    <p><strong>Current URL:</strong> <span id="currentUrl"></span></p>
+    <p><a href="/demo.html" style="color: #00ff88;">View Demo Page</a></p>
+    <p><a href="/index.html" style="color: #00ff88;">View Main Dashboard</a></p>
+    
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        console.log('✅ CloudFlare Pages is working!');
+        console.log('Current URL:', window.location.href);
+    </script>
+</body>
+</html>
