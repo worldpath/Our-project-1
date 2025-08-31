@@ -1,0 +1,6 @@
+/api/login  /.netlify/functions/api  200
+/api/status  /.netlify/functions/api  200
+/api/*  /.netlify/functions/api  200
+
+# SPA fallback
+/*    /index.html   200

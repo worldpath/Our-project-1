@@ -1,6 +1,6 @@
 name = "crypto-trading-bot-control-ui"
 compatibility_date = "2023-08-30"
-pages_build_output_dir = "control_ui/frontend"
+pages_build_output_dir = "dist"
 
 [env.production]
 name = "crypto-trading-bot-control-ui"
