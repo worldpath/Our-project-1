@@ -76,7 +76,7 @@ websocket-client>=1.5.0
 # Tax reporting and financial analysis
 xlsxwriter>=3.0.0
 reportlab>=4.0.0
-jose[cryptography]>=1.4.0
+python-jose[cryptography]>=3.0.0
 pytz>=2023.3
 
 # Enhanced monitoring and metrics
