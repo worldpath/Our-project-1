@@ -15,7 +15,7 @@ from typing import Dict, Any, List, Optional
 from pathlib import Path
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Request
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Request, Depends, Header
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -29,10 +29,44 @@ from risk_constraints import RiskConfig, Profile
 # Initialize FastAPI app
 app = FastAPI(title="Crypto Bot Control Plane", version="2.0.0")
 
+# Security: CORS and secure headers
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[os.getenv("CONTROL_UI_ALLOWED_ORIGIN", "*")],  # tighten in production
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
+)
+
+@app.middleware("http")
+async def set_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    # Basic CSP – adjust if you host assets elsewhere
+    response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
+    # HSTS only when served over HTTPS
+    if request.url.scheme == "https":
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
 # Setup static files and templates
 FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=FRONTEND_DIR / "templates")
+
+# Simple API key verification for state-changing endpoints
+API_KEY_ENV = "CONTROL_UI_API_KEY"
+
+def verify_api_key(x_api_key: Optional[str] = Header(default=None)):
+    expected = os.getenv(API_KEY_ENV)
+    if expected:  # enforce only when set
+        if not x_api_key or x_api_key != expected:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+    return True
 
 # WebSocket connections for real-time updates
 class ConnectionManager:
@@ -153,7 +187,7 @@ async def get_trading_settings() -> TradingSettings:
     return current_trading_settings
 
 @app.post("/api/risk-settings")
-async def update_risk_settings(settings: RiskSettings):
+async def update_risk_settings(settings: RiskSettings, _: bool = Depends(verify_api_key)):
     """Update risk settings and apply to bot"""
     try:
         # Validate settings using ChatGPT-5 Pro constraints
@@ -189,7 +223,7 @@ async def update_risk_settings(settings: RiskSettings):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/api/trading-settings")
-async def update_trading_settings(settings: TradingSettings):
+async def update_trading_settings(settings: TradingSettings, _: bool = Depends(verify_api_key)):
     """Update trading settings and apply to bot"""
     try:
         global current_trading_settings
@@ -211,7 +245,7 @@ async def update_trading_settings(settings: TradingSettings):
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.post("/api/emergency-stop")
-async def emergency_stop():
+async def emergency_stop(_: bool = Depends(verify_api_key)):
     """Emergency stop all trading"""
     success = apply_settings_to_bot({"emergency_stop": True})
     if success:

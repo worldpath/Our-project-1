@@ -5,8 +5,9 @@ class CryptoBotDashboard {
     constructor() {
         this.ws = null;
         this.reconnectAttempts = 0;
-        this.maxReconnectAttempts = 5;
-        this.reconnectInterval = 5000;
+        this.maxReconnectAttempts = Infinity; // no hard cap; use backoff ceiling instead
+        this.reconnectInterval = 2000;
+        this.reconnectMaxInterval = 30000; // 30s ceiling
         
         this.initializeWebSocket();
         this.initializeEventListeners();
@@ -48,16 +49,15 @@ class CryptoBotDashboard {
     }
 
     attemptReconnect() {
-        if (this.reconnectAttempts < this.maxReconnectAttempts) {
-            this.reconnectAttempts++;
-            console.log(`Attempting to reconnect (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
-            
-            setTimeout(() => {
-                this.initializeWebSocket();
-            }, this.reconnectInterval);
-        } else {
-            console.error('Max reconnection attempts reached');
-        }
+        this.reconnectAttempts++;
+        const delay = Math.min(
+            this.reconnectInterval * Math.pow(2, this.reconnectAttempts - 1) + Math.random() * 1000,
+            this.reconnectMaxInterval
+        );
+        console.log(`Reconnecting in ${Math.round(delay)}ms (attempt ${this.reconnectAttempts})...`);
+        setTimeout(() => {
+            this.initializeWebSocket();
+        }, delay);
     }
 
     handleWebSocketMessage(message) {
@@ -238,7 +238,7 @@ class CryptoBotDashboard {
         try {
             const response = await fetch('/api/risk-settings', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-API-Key': (window.CONTROL_UI_API_KEY||'') },
                 body: JSON.stringify(settings)
             });
             
@@ -272,7 +272,7 @@ class CryptoBotDashboard {
         try {
             const response = await fetch('/api/trading-settings', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-API-Key': (window.CONTROL_UI_API_KEY||'') },
                 body: JSON.stringify(settings)
             });
             
@@ -291,7 +291,7 @@ class CryptoBotDashboard {
     async emergencyStop() {
         if (confirm('Are you sure you want to activate emergency stop? This will halt all trading immediately.')) {
             try {
-                const response = await fetch('/api/emergency-stop', { method: 'POST' });
+                const response = await fetch('/api/emergency-stop', { method: 'POST', headers: { 'X-API-Key': (window.CONTROL_UI_API_KEY||'') } });
                 if (response.ok) {
                     this.showNotification('Emergency stop activated successfully', 'success');
                 } else {

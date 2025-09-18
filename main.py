@@ -715,37 +715,49 @@ class BinanceConnector:
             return pd.DataFrame()
     
     async def place_order(self, signal: TradingSignal, quantity: float) -> Dict[str, Any]:
-        """Place trading order based on signal"""
-        try:
-            # Convert symbol format
-            binance_symbol = signal.symbol.replace('/', '')
-            
-            # Determine order side
-            side = 'BUY' if signal.signal_type == 'BUY' else 'SELL'
-            
-            # Place market order for immediate execution
-            order = self.client.order_market(
-                symbol=binance_symbol,
-                side=side,
-                quantity=quantity
-            )
-            
-            logging.info(f"Order placed: {order}")
-            return {
-                'success': True,
-                'order_id': order['orderId'],
-                'symbol': signal.symbol,
-                'side': side,
-                'quantity': quantity,
-                'status': order['status']
-            }
-            
-        except BinanceAPIException as e:
-            logging.error(f"Binance API error placing order: {e}")
-            return {'success': False, 'error': str(e)}
-        except Exception as e:
-            logging.error(f"Error placing order: {e}")
-            return {'success': False, 'error': str(e)}
+        """Place trading order based on signal with idempotency and retry."""
+        import uuid
+        import time
+        
+        # Convert symbol format
+        binance_symbol = signal.symbol.replace('/', '')
+        side = 'BUY' if signal.signal_type == 'BUY' else 'SELL'
+        client_order_id = f"bot_{binance_symbol}_{side}_{int(time.time()*1000)}_{uuid.uuid4().hex[:8]}"
+        
+        max_retries = 3
+        backoff = 0.5
+        for attempt in range(1, max_retries + 1):
+            try:
+                order = self.client.create_order(
+                    symbol=binance_symbol,
+                    side=side,
+                    type='MARKET',
+                    quantity=quantity,
+                    newClientOrderId=client_order_id
+                )
+                logging.info(f"Order placed: {order}")
+                return {
+                    'success': True,
+                    'order_id': order.get('orderId') or order.get('clientOrderId') or client_order_id,
+                    'symbol': signal.symbol,
+                    'side': side,
+                    'quantity': quantity,
+                    'status': order.get('status', 'FILLED')
+                }
+            except BinanceAPIException as e:
+                # Rate limit or network issues → retry
+                if e.status_code in (418, 429) or 'Too many requests' in str(e):
+                    logging.warning(f"Rate limit hit on attempt {attempt}: {e}. Retrying in {backoff:.1f}s")
+                    await asyncio.sleep(backoff)
+                    backoff = min(backoff * 2, 5.0)
+                    continue
+                logging.error(f"Binance API error placing order: {e}")
+                return {'success': False, 'error': str(e)}
+            except Exception as e:
+                logging.warning(f"Order attempt {attempt} failed: {e}")
+                await asyncio.sleep(backoff)
+                backoff = min(backoff * 2, 5.0)
+        return {'success': False, 'error': 'Order placement failed after retries'}
 
 class AggressiveTradingBot:
     """
@@ -775,61 +787,11 @@ class AggressiveTradingBot:
         
         # Trading state
         self.positions: List[Position] = []
-        # Initialize portfolio value - try to get real balance first
-        try:
-            # Attempt to get real account balance
-            import asyncio
-            real_balances = asyncio.run(self.binance.get_account_balance())
-            
-            # Calculate TOTAL portfolio value including ALL crypto holdings
-            total_usd = 0
-            
-            # Get current prices for crypto valuation
-            for asset, balance_info in real_balances.items():
-                asset_total = balance_info['total']
-                
-                if asset in ['USD', 'USDT', 'USDC', 'BUSD']:
-                    # Direct USD value
-                    asset_usd_value = asset_total
-                else:
-                    # Get crypto asset USD value
-                    try:
-                        # Try to get price in USDT first
-                        ticker = self.binance.client.get_symbol_ticker(symbol=f"{asset}USDT")
-                        price = float(ticker['price'])
-                        asset_usd_value = asset_total * price
-                        print(f"💰 {asset}: {asset_total:.8f} × ${price:.2f} = ${asset_usd_value:.2f}")
-                    except:
-                        try:
-                            # Try to get price in USD if USDT fails
-                            ticker = self.binance.client.get_symbol_ticker(symbol=f"{asset}USD")
-                            price = float(ticker['price'])
-                            asset_usd_value = asset_total * price
-                            print(f"💰 {asset}: {asset_total:.8f} × ${price:.2f} = ${asset_usd_value:.2f}")
-                        except:
-                            # Skip if can't get price
-                            asset_usd_value = 0
-                            print(f"⚠️ {asset}: Cannot get price, skipping ${asset_total:.8f}")
-                
-                total_usd += asset_usd_value
-            
-            if total_usd > 0:
-                self.portfolio_value = total_usd
-                print(f"✅ TOTAL PORTFOLIO VALUE (USD + Crypto): ${total_usd:,.2f}")
-                print(f"🎯 Position Size (50%): ${total_usd * 0.5:,.2f}")
-                print(f"⚡ Max Exposure (80%): ${total_usd * 0.8:,.2f}")
-            else:
-                # Fallback to environment variable or default
-                self.portfolio_value = float(os.getenv('REAL_PORTFOLIO_VALUE', os.getenv('INITIAL_CAPITAL', '10000')))
-                print(f"⚠️ No USD balance found, using configured value: ${self.portfolio_value:,.2f}")
-                
-        except Exception as e:
-            # Fallback for IP whitelist or other API issues
-            self.portfolio_value = float(os.getenv('REAL_PORTFOLIO_VALUE', os.getenv('INITIAL_CAPITAL', '10000')))
-            print(f"⚠️ Cannot access Binance API (IP whitelist?): {str(e)}")
-            print(f"📊 Using configured portfolio value: ${self.portfolio_value:,.2f}")
-            if "35.197.15.230" in str(e) or "IP" in str(e).upper():
-                print(f"💡 TIP: Add IP 35.197.15.230 to your Binance.US API whitelist for live data")
+        
+        # Initialize portfolio value from config/env first; refresh asynchronously later
+        self.portfolio_value = float(os.getenv('REAL_PORTFOLIO_VALUE', os.getenv('INITIAL_CAPITAL', '10000')))
+        print(f"📊 Using configured portfolio value: ${self.portfolio_value:,.2f}")
+        
         self.trading_active = False
         self.start_time = datetime.utcnow()
         self.last_report_time = datetime.utcnow()
@@ -855,11 +817,19 @@ class AggressiveTradingBot:
         )
         self.logger = logging.getLogger(__name__)
         
+        # Live-trading safety gate: require explicit confirmation
+        agree_to_risk = os.getenv('AGREE_TO_RISK', 'NO').upper() in ('YES', 'Y', 'TRUE', '1')
+        live_trading_env = os.getenv('LIVE_TRADING', str(self.config.live_trading)).lower() == 'true'
+        if not (live_trading_env and agree_to_risk):
+            self.config.live_trading = False
+        
         self.logger.info("🚀 AGGRESSIVE CRYPTO TRADING BOT - FULL SYSTEM INITIALIZED")
         self.logger.info(f"💰 Initial Capital: ${self.portfolio_value:,.2f}")
         self.logger.info(f"⚡ Portfolio Risk: {self.config.portfolio_risk}%")
         self.logger.info(f"🎯 Max Position Size: {self.config.max_position_size}%")
         self.logger.info(f"🔥 LIVE TRADING MODE: {self.config.live_trading}")
+        if not self.config.live_trading:
+            self.logger.warning("Live trading disabled. Set LIVE_TRADING=true and AGREE_TO_RISK=YES to enable.")
     
     def load_config(self) -> TradingConfig:
         """Load trading configuration"""
@@ -1205,6 +1175,30 @@ Generated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}
         
         # Start trading in background
         trading_task = asyncio.create_task(self.start_trading())
+        
+        # Refresh portfolio value asynchronously at startup
+        async def refresh_portfolio_value():
+            try:
+                balances = await self.binance.get_account_balance()
+                total_usd = 0.0
+                for asset, info in balances.items():
+                    total = info['total']
+                    if asset in ['USD', 'USDT', 'USDC', 'BUSD']:
+                        total_usd += total
+                    else:
+                        try:
+                            ticker = self.binance.client.get_symbol_ticker(symbol=f"{asset}USDT")
+                            price = float(ticker['price'])
+                            total_usd += total * price
+                        except Exception:
+                            continue
+                if total_usd > 0:
+                    self.portfolio_value = total_usd
+                    self.logger.info(f"Updated portfolio value from API: ${total_usd:,.2f}")
+            except Exception as e:
+                self.logger.warning(f"Could not refresh portfolio value: {e}")
+        
+        asyncio.create_task(refresh_portfolio_value())
         
         # Start web server
         config = uvicorn.Config(
