@@ -45,9 +45,17 @@ async def set_security_headers(request: Request, call_next):
     response = await call_next(request)
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Referrer-Policy"] = "no-referrer"
-    # Basic CSP – adjust if you host assets elsewhere
-    response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    # Dynamic CSP: allow same-origin plus WS/HTTPS to this host
+    host = request.url.hostname or ""
+    csp = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+        "img-src 'self' data:; "
+        f"connect-src 'self' https://{host} wss://{host}"
+    )
+    response.headers["Content-Security-Policy"] = csp
     # HSTS only when served over HTTPS
     if request.url.scheme == "https":
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
@@ -257,6 +265,13 @@ async def emergency_stop(_: bool = Depends(verify_api_key)):
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     """WebSocket endpoint for real-time updates"""
+    # Enforce API key via proxy-injected header before accepting
+    expected = os.getenv(API_KEY_ENV)
+    provided = websocket.headers.get("x-api-key")
+    if expected and provided != expected:
+        # 1008 = policy violation
+        await websocket.close(code=1008)
+        return
     await manager.connect(websocket)
     try:
         while True:

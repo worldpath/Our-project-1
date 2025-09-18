@@ -7,7 +7,7 @@ class CryptoBotDashboard {
         this.reconnectAttempts = 0;
         this.maxReconnectAttempts = Infinity; // no hard cap; use backoff ceiling instead
         this.reconnectInterval = 2000;
-        this.reconnectMaxInterval = 30000; // 30s ceiling
+        this.reconnectMaxInterval = 45000; // 45s ceiling (reduce herd risk)
         
         this.initializeWebSocket();
         this.initializeEventListeners();
@@ -32,8 +32,8 @@ class CryptoBotDashboard {
                 this.handleWebSocketMessage(message);
             };
             
-            this.ws.onclose = () => {
-                console.log('WebSocket disconnected');
+            this.ws.onclose = (evt) => {
+                console.log('WebSocket disconnected', evt && evt.code);
                 this.updateConnectionStatus(false);
                 this.attemptReconnect();
             };
@@ -50,10 +50,9 @@ class CryptoBotDashboard {
 
     attemptReconnect() {
         this.reconnectAttempts++;
-        const delay = Math.min(
-            this.reconnectInterval * Math.pow(2, this.reconnectAttempts - 1) + Math.random() * 1000,
-            this.reconnectMaxInterval
-        );
+        // Exponential backoff + full jitter per AWS guidance
+        const base = this.reconnectInterval * Math.pow(2, this.reconnectAttempts - 1);
+        const delay = Math.min(base * Math.random(), this.reconnectMaxInterval);
         console.log(`Reconnecting in ${Math.round(delay)}ms (attempt ${this.reconnectAttempts})...`);
         setTimeout(() => {
             this.initializeWebSocket();

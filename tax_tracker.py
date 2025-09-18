@@ -83,6 +83,9 @@ class TaxTracker:
     def _init_database(self):
         """Initialize SQLite database for tax records"""
         self.connection = sqlite3.connect(self.db_path)
+        # Pragmas for durability and concurrency
+        self.connection.execute('PRAGMA journal_mode=WAL;')
+        self.connection.execute('PRAGMA synchronous=NORMAL;')
         cursor = self.connection.cursor()
         
         # Create tables
@@ -116,6 +119,21 @@ class TaxTracker:
             )
         ''')
         
+        # Income events (staking rewards, airdrops, forks, interest)
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS income_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                income_id TEXT UNIQUE,
+                symbol TEXT NOT NULL,
+                income_type TEXT NOT NULL, -- 'staking', 'airdrop', 'fork', 'interest'
+                quantity REAL NOT NULL,
+                fmv_usd REAL NOT NULL, -- fair market value at receipt
+                event_date TEXT NOT NULL,
+                description TEXT,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS trades (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -133,32 +151,37 @@ class TaxTracker:
             )
         ''')
         
+        # Indexes for performance
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_tax_lots_symbol ON tax_lots(symbol)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_events_date ON taxable_events(event_date)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_trades_timestamp ON trades(timestamp)')
+        
         self.connection.commit()
         
     def record_trade(self, trade_id: str, symbol: str, side: str, quantity: float, 
                     price: float, fees: float = 0, timestamp: datetime = None,
                     exchange: str = None, order_id: str = None):
-        """Record a trade for tax purposes"""
+        """Record a trade for tax purposes (idempotent on trade_id)"""
         if timestamp is None:
             timestamp = datetime.now(timezone.utc)
-            
-        cursor = self.connection.cursor()
+        
         try:
-            cursor.execute('''
-                INSERT OR REPLACE INTO trades 
-                (trade_id, symbol, side, quantity, price, value, fees, timestamp, exchange, order_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
-                trade_id, symbol, side, quantity, price, 
-                quantity * price, fees, timestamp.isoformat(),
-                exchange, order_id
-            ))
-            self.connection.commit()
-            
-            # Process the trade for tax implications
-            self._process_trade(trade_id, symbol, side, Decimal(str(quantity)), 
-                             Decimal(str(price)), Decimal(str(fees)), timestamp)
-            
+            with self.connection:
+                cursor = self.connection.cursor()
+                cursor.execute('''
+                    INSERT INTO trades 
+                    (trade_id, symbol, side, quantity, price, value, fees, timestamp, exchange, order_id)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(trade_id) DO NOTHING
+                ''', (
+                    trade_id, symbol, side, quantity, price, 
+                    quantity * price, fees, timestamp.isoformat(),
+                    exchange, order_id
+                ))
+                # Process the trade for tax implications (only if inserted)
+                if cursor.rowcount:
+                    self._process_trade(trade_id, symbol, side, Decimal(str(quantity)), 
+                                     Decimal(str(price)), Decimal(str(fees)), timestamp)
         except sqlite3.IntegrityError as e:
             logger.warning(f"Trade {trade_id} already exists: {e}")
             
@@ -362,6 +385,19 @@ class TaxTracker:
             'as_of_date': datetime.now(timezone.utc).isoformat()
         }
         
+    def record_income(self, income_id: str, symbol: str, income_type: str, quantity: float, fmv_usd: float, event_date: Optional[datetime] = None, description: str = ""):
+        """Record income events such as staking rewards or airdrops"""
+        event_date = event_date or datetime.now(timezone.utc)
+        try:
+            with self.connection:
+                self.connection.execute('''
+                    INSERT INTO income_events (income_id, symbol, income_type, quantity, fmv_usd, event_date, description)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(income_id) DO NOTHING
+                ''', (income_id, symbol, income_type, quantity, fmv_usd, event_date.isoformat(), description))
+        except sqlite3.IntegrityError as e:
+            logger.warning(f"Income event {income_id} already exists: {e}")
+
     def generate_1099_b_data(self, tax_year: int) -> List[Dict]:
         """Generate 1099-B data for a tax year"""
         cursor = self.connection.cursor()
@@ -390,6 +426,26 @@ class TaxTracker:
             
         return events
         
+    def export_8949_csv(self, tax_year: int, filename: Optional[str] = None) -> str:
+        """Export a basic Form 8949-compatible CSV (short-term/long-term not split here)"""
+        data_1099b = self.generate_1099_b_data(tax_year)
+        filename = filename or f"form_8949_{tax_year}.csv"
+        import csv
+        with open(filename, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(["Description of property", "Date acquired", "Date sold", "Proceeds", "Cost or other basis", "Adjustment code(s)", "Gain or (loss)"])
+            for e in data_1099b:
+                writer.writerow([
+                    e['symbol'],
+                    "VARIOUS",  # detailed lot dates can be expanded in future
+                    e['event_date'][:10],
+                    f"{e['proceeds']:.2f}",
+                    f"{e['cost_basis']:.2f}",
+                    "W" if e.get('wash_sale') else "",
+                    f"{e['realized_gain_loss']:.2f}"
+                ])
+        return filename
+
     def export_tax_report(self, tax_year: int, output_format: str = "xlsx") -> str:
         """Export comprehensive tax report"""
         
