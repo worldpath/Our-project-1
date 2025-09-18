@@ -1,6 +1,29 @@
 {
   email {$CADDY_EMAIL}
 }
+
+# Serve your dashboard on {$DOMAIN}
+# Inject API key header for state-changing routes and WebSocket
 {$DOMAIN} {
+  encode gzip
+
+  @ws {
+    path /ws
+  }
+  @api {
+    path /api/*
+  }
+
+  # WebSocket with header injection
+  reverse_proxy @ws crypto-dashboard:8000 {
+    header_up X-API-Key {env.CONTROL_UI_API_KEY}
+  }
+
+  # API with header injection
+  reverse_proxy @api crypto-dashboard:8000 {
+    header_up X-API-Key {env.CONTROL_UI_API_KEY}
+  }
+
+  # All other routes
   reverse_proxy crypto-dashboard:8000
 }
