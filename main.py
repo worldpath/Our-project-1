@@ -985,13 +985,35 @@ class AggressiveTradingBot:
         
         # Risk management evaluation
         risk_eval = self.risk_manager.evaluate_signal(signal, self.portfolio_value, self.positions)
+
+        # Apply hard guardrails regardless of UI/env inputs
+        try:
+            max_risk_per_trade_hard = float(os.getenv("MAX_RISK_PER_TRADE_HARD", "0.25")) * 100.0  # convert to percent
+        except Exception:
+            max_risk_per_trade_hard = 25.0
+        try:
+            max_daily_loss_hard = float(os.getenv("MAX_DAILY_LOSS_HARD", "0.50")) * 100.0
+        except Exception:
+            max_daily_loss_hard = 50.0
+
+        # Enforce per-trade risk ceiling (caps position size by risk percent)
+        if signal.position_size > max_risk_per_trade_hard:
+            risk_eval["approved"] = False
+            risk_eval["reasons"].append(
+                f"Per-trade risk exceeds hard ceiling {max_risk_per_trade_hard:.2f}% > {max_risk_per_trade_hard:.2f}%")
+
+        # Enforce daily loss breaker (simple check on daily pnl vs start-of-day)
+        # If you track daily PnL elsewhere, wire that in. This is a conservative stop.
+        if hasattr(self.risk_manager, "max_drawdown_today") and self.risk_manager.max_drawdown_today > (max_daily_loss_hard):
+            risk_eval["approved"] = False
+            risk_eval["reasons"].append("Daily loss hard breaker engaged")
         
         if not risk_eval["approved"]:
             self.logger.info(f"Signal rejected for {signal.symbol}: {', '.join(risk_eval['reasons'])}")
             return
         
         # Adjust position size if needed
-        signal.position_size = risk_eval["adjusted_position_size"]
+        signal.position_size = min(risk_eval["adjusted_position_size"], max_risk_per_trade_hard)
         
         # Calculate quantity to trade
         position_value = (signal.position_size / 100) * self.portfolio_value
