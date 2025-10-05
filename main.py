@@ -940,6 +940,18 @@ class AggressiveTradingBot:
                 }
             )
         
+        @self.app.get("/pairs")
+        async def get_trading_pairs():
+            """Get available trading pairs"""
+            return JSONResponse(
+                status_code=200,
+                content={
+                    "pairs": self.config.trading_pairs,
+                    "total_pairs": len(self.config.trading_pairs),
+                    "exchange": "binance.us"
+                }
+            )
+        
         @self.app.post("/emergency_stop")
         async def emergency_stop():
             """Emergency stop all trading"""
