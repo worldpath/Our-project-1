@@ -1,0 +1,42 @@
+api:
+  exchange: binance
+  api_key: ${S4YsnAc4YcguwIB0iL4Qu9BMKKDetId8C76x1mx6hLEZ1BhI3gVZ0OKv7SZ9adK2}
+  api_secret: ${PlWBgmTe9UBm9ovtxU9hbRk2IHBYDFfGilIBYQwJPGVFCaYakH1AffGNfOFaQOyL}
+
+execution:
+  instruments: ["BTCUSDT", "ETHUSDT", "SOLUSDT"]   # start small; you can add more later
+  order_type: market                                # or: limit_post_only
+
+risk:
+  risk_per_trade: 0.01                              # 1% per trade (fraction of equity)
+
+reporting:
+  trade_log_file: logs/trades.csv
+
+portfolio:
+  max_portfolio_heat: 0.30                          # max total risk on at once (30%)
+  max_daily_loss: 0.06                              # 6% daily stop
+  max_drawdown: 0.30                                # 30% overall stop
+  concurrent_positions: 4                           # cap simultaneous positions
+
+strategy:
+  enabled_strategies:
+    - momentum
+    - breakout
+
+routing: {}                                         # optional per-strategy order types, e.g. {momentum: market}
+per_strategy_risk: {}                               # optional, e.g. {momentum: 0.008, breakout: 0.012}
+limit_post_only:
+  buy_offset_ticks: 1
+  retry_sleep_ms: 500
+  max_retries: 3
+
+hybrid_routing:
+  enabled: true
+  adx_threshold: 25
+
+strategy_params:
+  tp2_r: 3.0
+
+alerts:
+  enabled: false
