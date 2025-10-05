@@ -25,4 +25,4 @@ ENV CONFIG_PATH=config/aggressive_production.yaml \
 EXPOSE 8000
 
 # We start the bot from compose with an absolute path, but leave a sane default here too:
-CMD ["bash","-lc","python /app/run_live.py"]
+CMD ["bash","-lc","python /app/main.py"]
