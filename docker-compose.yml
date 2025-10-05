@@ -8,8 +8,10 @@ services:
     # Persist only runtime data; keep code in the image
     volumes:
       - ./data:/app/data
+    ports:
+      - "8889:8889"
     # Absolute path avoids CWD ambiguity
-    command: bash -lc "python /app/run_live.py"
+    command: bash -lc "python /app/main.py"
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "scripts/healthcheck_bot.py"]
