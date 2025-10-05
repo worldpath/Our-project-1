@@ -840,19 +840,20 @@ class AggressiveTradingBot:
                 config_data = yaml.safe_load(f)
             
             # Extract settings from correct config sections
+            trading = config_data.get('trading', {})
             portfolio = config_data.get('portfolio', {})
             risk = config_data.get('risk', {})
             features = config_data.get('features', {})
             
             return TradingConfig(
-                environment=config_data.get('environment', 'production'),
-                trading_mode=config_data.get('trading_mode', 'aggressive'),
+                environment=trading.get('environment', 'production'),
+                trading_mode=trading.get('mode', 'aggressive'),
                 portfolio_risk=portfolio.get('max_portfolio_heat', 80.0),
                 max_position_size=portfolio.get('max_position_size', 50.0),
                 concurrent_positions=portfolio.get('concurrent_positions', 8),
-                trading_timeframe='15m',
+                trading_timeframe=trading.get('timeframe', '15m'),
                 risk_per_trade=risk.get('risk_per_trade', 15.0),
-                trading_pairs=config_data.get('trading_pairs', []),
+                trading_pairs=trading.get('trading_pairs', []),
                 max_daily_loss=portfolio.get('max_daily_loss', 25.0),
                 max_drawdown=portfolio.get('max_drawdown', 60.0),
                 emergency_stop=60.0,
