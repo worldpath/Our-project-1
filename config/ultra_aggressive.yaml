@@ -66,6 +66,29 @@ regime_detection:
 execution:
   engine_type: "enhanced"
   
+  # Trading Instruments (All Binance.US USDT pairs)
+  instruments:
+    - "BTCUSDT"
+    - "ETHUSDT"
+    - "BNBUSDT"
+    - "ADAUSDT"
+    - "DOGEUSDT"
+    - "XRPUSDT"
+    - "DOTUSDT"
+    - "UNIUSDT"
+    - "LTCUSDT"
+    - "LINKUSDT"
+    - "SOLUSDT"
+    - "MATICUSDT"
+    - "ETCUSDT"
+    - "XLMUSDT"
+    - "ALGOUSDT"
+    - "ATOMUSDT"
+    - "AVAXUSDT"
+    - "TRXUSDT"
+    - "AAVEUSDT"
+    - "EOSUSDT"
+  
   # TWAP Configuration
   twap:
     enabled: true
